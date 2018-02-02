@@ -1,0 +1,589 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Ren_data1_week2</title><meta name="generator" content="MATLAB 8.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2017-10-12"><meta name="DC.source" content="Ren_data1_week2.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1></h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Ren_data1_week2.m</a></li><li><a href="#2">Load Data</a></li><li><a href="#3">Basic Plot</a></li><li><a href="#4">Lots of data, pick one year to zoom in, say 2013</a></li><li><a href="#5">Plot 2013</a></li><li><a href="#6">Manual Temperature Record : use average of surface and bottom</a></li><li><a href="#7">Means and Error of Mean</a></li><li><a href="#8">Variance / Standard deviation</a></li><li><a href="#9">Theoretical PDFs</a></li><li><a href="#10">pdfs</a></li><li><a href="#11">crude cdfs</a></li></ul></div><h2>Ren_data1_week2.m<a name="1"></a></h2><pre class="language-matlab">HW <span class="string">week</span> <span class="string">2</span>, Look <span class="string">at</span> <span class="string">temperature</span> <span class="string">from</span> <span class="string">Scripps</span> <span class="string">Pier</span>, manual <span class="string">versus</span>
+automatic <span class="string">sampling</span>, compare
+</pre><pre class="language-matlab">A. Ren October <span class="string">12</span>, 2017
+</pre><h2>Load Data<a name="2"></a></h2><pre class="language-matlab">Manual <span class="string">Scripps</span> <span class="string">Shore</span> <span class="string">Station</span> <span class="string">Data</span> <span class="string">is</span> <span class="string">in</span> <span class="string">an</span> <span class="string">excel</span> <span class="string">file:</span>
+</pre><pre class="codeinput">load(<span class="string">'scrippspier_manual_t.mat'</span>, <span class="string">'scrippsmanualdata'</span>, <span class="keyword">...</span>
+    <span class="string">'header_scrippsmanualdata'</span>)           <span class="comment">% manually import and create .mat</span>
+
+yearvector = scrippsmanualdata(:, 1);
+monthvector = scrippsmanualdata(:, 2);
+dayvector = scrippsmanualdata(:, 3);
+hourvector = floor(scrippsmanualdata(:, 4)/100);
+minutevector = scrippsmanualdata(:, 4) - (hourvector*100);
+secondvector = repmat([0], size(yearvector, 1), 1);
+
+scrippsmanual_time = datetime(yearvector, monthvector, dayvector, <span class="keyword">...</span>
+                              hourvector, minutevector, secondvector, <span class="keyword">...</span>
+                              <span class="string">'TimeZone'</span>, <span class="string">'America/Los_Angeles'</span>);
+<span class="comment">%  note that this includes naT, "not a time" values, for when time was NaN</span>
+<span class="comment">%  in the original data</span>
+
+scrippsmanual_stemp = scrippsmanualdata(:, 6);
+scrippsmanual_btemp = scrippsmanualdata(:, 8);
+<span class="comment">%  for now, ignore the flag system, col 5, 7, 9 - for time, stemp, btemp</span>
+
+<span class="comment">%   Automatic Scripps Pier data from thredds server:</span>
+yearlist = 2005:2015;
+SP_temp_2015 = [];
+SP_time_2015 = [];
+SP_depth_2015 = [];
+
+<span class="keyword">for</span> n = 1:length(yearlist);
+    yearof = yearlist(n);
+    fileloca = sprintf(<span class="string">'http://sccoos.org/thredds/dodsC/autoss/scripps_pier-%04d.nc'</span>, yearof);
+    <span class="comment">%ncdisp(fileloca)</span>
+
+    newtemp = ncread(fileloca, <span class="string">'temperature'</span>);
+    newtime = ncread(fileloca, <span class="string">'time'</span>);
+    newdepth = ncread(fileloca, <span class="string">'depth'</span>);
+    SP_temp_2015 = [SP_temp_2015; newtemp];
+    SP_time_2015 = [SP_time_2015; newtime];
+    SP_depth_2015 = [SP_depth_2015; newdepth];
+<span class="keyword">end</span>
+<span class="comment">%there is an outlier from visual inspection</span>
+<span class="comment">% remove</span>
+badvalue = find(SP_temp_2015 &gt; 30);
+SP_temp_2015(badvalue) = NaN;
+SP_time_2015(badvalue) = NaN;
+SP_depth_2015(badvalue) = NaN;
+
+
+SP_temp_2015 = double(SP_temp_2015);
+SP_time_2015 = double(SP_time_2015);
+SP_depth_2015 = double(SP_depth_2015);
+
+SP_time_2015_mtlabtime = datetime(SP_time_2015, <span class="string">'ConvertFrom'</span>, <span class="keyword">...</span>
+    <span class="string">'posixtime'</span>, <span class="string">'TimeZone'</span>, <span class="string">'America/Los_Angeles'</span>);
+
+save(<span class="string">'scrippspier_auto_t.mat'</span>, <span class="string">'SP_temp_2015'</span>, <span class="string">'SP_time_2015'</span>, <span class="keyword">...</span>
+    <span class="string">'SP_depth_2015'</span>, <span class="string">'SP_time_2015_mtlabtime'</span>)
+</pre><h2>Basic Plot<a name="3"></a></h2><pre class="codeinput">figure(<span class="string">'Name'</span>, <span class="string">'Temperature, Raw Comparison'</span>)
+
+<span class="comment">% temperature: automatic</span>
+plot(SP_time_2015_mtlabtime, SP_temp_2015, <span class="string">'k'</span>, <span class="string">'LineWidth'</span>, 0.5)
+
+hold <span class="string">on</span>
+
+<span class="comment">% find where 2005 starts</span>
+startday = find(scrippsmanual_time &gt; <span class="keyword">...</span>
+           datetime([2005 01 01], <span class="string">'TimeZone'</span>, <span class="string">'America/Los_Angeles'</span>), <span class="keyword">...</span>
+           1, <span class="string">'first'</span>);
+
+<span class="comment">% surface temperature: manual</span>
+plot(scrippsmanual_time(startday:end), <span class="keyword">...</span>
+    scrippsmanual_stemp(startday:end), <span class="string">'r'</span>, <span class="string">'LineWidth'</span>, 0.5)
+
+<span class="comment">% bottom temperature: manual</span>
+plot(scrippsmanual_time(startday:end), <span class="keyword">...</span>
+    scrippsmanual_btemp(startday:end), <span class="string">'b'</span>, <span class="string">'LineWidth'</span>, 0.5)
+
+xlim([datenum(2004, 12, 31) datenum(2016, 1, 2)])
+grid <span class="string">on</span>
+xlabel(<span class="string">'Time'</span>)
+ylabel(<span class="string">'Temperature (degC)'</span>)
+</pre><img vspace="5" hspace="5" src="Ren_data1_week2_01.png" alt=""> <h2>Lots of data, pick one year to zoom in, say 2013<a name="4"></a></h2><pre class="codeinput"><span class="comment">% find time interval</span>
+startday1 = find(<span class="keyword">...</span>
+    SP_time_2015_mtlabtime &gt; <span class="keyword">...</span>
+    datetime([2013 01 01], <span class="string">'TimeZone'</span>, <span class="string">'America/Los_Angeles'</span>), 1, <span class="string">'first'</span>);
+endday1 = find(<span class="keyword">...</span>
+    SP_time_2015_mtlabtime &gt; <span class="keyword">...</span>
+    datetime([2013 12 31], <span class="string">'TimeZone'</span>, <span class="string">'America/Los_Angeles'</span>), 1, <span class="string">'first'</span>);
+
+startday2 = find(<span class="keyword">...</span>
+    scrippsmanual_time &gt; <span class="keyword">...</span>
+    datetime([2013 01 01], <span class="string">'TimeZone'</span>, <span class="string">'America/Los_Angeles'</span>), 1, <span class="string">'first'</span>);
+endday2 = find(scrippsmanual_time &gt; <span class="keyword">...</span>
+    datetime([2013 12 31], <span class="string">'TimeZone'</span>, <span class="string">'America/Los_Angeles'</span>), 1, <span class="string">'first'</span>);
+</pre><h2>Plot 2013<a name="5"></a></h2><pre class="codeinput">figure(<span class="string">'Name'</span>, <span class="string">'Temperature, raw, 2013 comparison'</span>)
+
+<span class="comment">% temperature: automatic</span>
+plot(SP_time_2015_mtlabtime(startday1:endday1), <span class="keyword">...</span>
+    SP_temp_2015(startday1:endday1), <span class="string">'k'</span>, <span class="string">'LineWidth'</span>, 0.5)
+
+hold <span class="string">on</span>
+
+<span class="comment">% surface temperature: manual</span>
+plot(scrippsmanual_time(startday2:endday2), <span class="keyword">...</span>
+    scrippsmanual_stemp(startday2:endday2), <span class="string">'r'</span>, <span class="string">'LineWidth'</span>, 0.7)
+
+<span class="comment">% bottom temperature: manual</span>
+plot(scrippsmanual_time(startday2:endday2), <span class="keyword">...</span>
+    scrippsmanual_btemp(startday2:endday2), <span class="string">'Color'</span>, [135 206 250]/255, <span class="string">'LineWidth'</span>, 0.5)
+
+grid <span class="string">on</span>
+xlabel(<span class="string">'Time'</span>)
+ylabel(<span class="string">'Temperature (degC)'</span>)
+</pre><img vspace="5" hspace="5" src="Ren_data1_week2_02.png" alt=""> <h2>Manual Temperature Record : use average of surface and bottom<a name="6"></a></h2><pre class="codeinput">scrippsmanual_avtemp = (scrippsmanual_stemp + scrippsmanual_btemp)/2;
+</pre><h2>Means and Error of Mean<a name="7"></a></h2><pre class="language-matlab">since <span class="string">manual</span> <span class="string">record</span> <span class="string">ends</span> <span class="string">on</span> <span class="string">Oct</span> <span class="string">31</span>, 2015, use <span class="string">automatic</span> <span class="string">record</span> <span class="string">until</span>
+that <span class="string">day</span>
+since <span class="string">automatic</span> <span class="string">record</span> <span class="string">starts</span> <span class="string">on</span> <span class="string">Jun</span> <span class="string">16</span>, 2005, use <span class="string">manual</span> <span class="string">record</span>
+starting <span class="string">then</span>
+</pre><pre class="codeinput">endday4 = find(SP_time_2015_mtlabtime &gt; <span class="keyword">...</span>
+               datetime([2015 10 31 9 25 0], <span class="string">'TimeZone'</span>, <span class="string">'America/Los_Angeles'</span>), <span class="keyword">...</span>
+               1, <span class="string">'first'</span>);
+startday4 = find(scrippsmanual_time &gt; <span class="keyword">...</span>
+               datetime([2005 06 16], <span class="string">'TimeZone'</span>, <span class="string">'America/Los_Angeles'</span>), <span class="keyword">...</span>
+               1, <span class="string">'first'</span>);
+
+manualdata = scrippsmanual_avtemp(startday4:end);
+automadata = SP_temp_2015(1:endday4);
+
+<span class="comment">%   calculate mean</span>
+SP_man_av = mean(manualdata, <span class="string">'omitnan'</span>);  disp(<span class="string">'mean: '</span>); disp(SP_man_av)
+SP_aut_av = mean(automadata, <span class="string">'omitnan'</span>);  disp(SP_aut_av)
+
+<span class="comment">%   how many data? N?</span>
+SP_man_N = sum(~isnan(manualdata));  disp(<span class="string">'N: '</span>); disp(SP_man_N)
+SP_aut_N = sum(~isnan(automadata));  disp(SP_aut_N)
+
+<span class="comment">%   error of mean</span>
+SP_man_av_std = std(manualdata, <span class="string">'omitnan'</span>)/ sqrt(SP_man_N);
+SP_aut_av_std = std(automadata, <span class="string">'omitnan'</span>)/ sqrt(SP_aut_N);
+
+disp(<span class="string">'error of mean: '</span>); disp(SP_man_av_std); disp(SP_aut_av_std)
+</pre><pre class="codeoutput">mean: 
+   17.7861
+
+   17.6994
+
+N: 
+        3403
+
+     1069188
+
+error of mean: 
+    0.0448
+
+    0.0027
+
+</pre><h2>Variance / Standard deviation<a name="8"></a></h2><pre class="codeinput">SP_man_std = std(manualdata, <span class="string">'omitnan'</span>); disp(SP_man_std)
+SP_aut_std = std(automadata, <span class="string">'omitnan'</span>); disp(SP_aut_std)
+
+<span class="comment">%   subsample automatic data to find nearest neighbor to manual data</span>
+manualtime = scrippsmanual_time(startday4:end);
+SP_aut_subs_i = [];
+<span class="keyword">for</span> n = 1:length(manualtime)
+    subtractvalue = abs(SP_time_2015_mtlabtime - manualtime(n));
+    subtractvalue = seconds(subtractvalue);
+    indexsmall = find(subtractvalue == min(subtractvalue));
+    <span class="keyword">if</span> length(indexsmall) &gt;1 <span class="comment">% sometimes there is a duplicate "closest" pt</span>
+        indexsmall = indexsmall(1);
+    <span class="keyword">elseif</span> isempty(indexsmall);
+        <span class="comment">%disp('help'); disp(n);</span>
+        indexsmall = NaN;
+    <span class="keyword">end</span>
+    SP_aut_subs_i = [SP_aut_subs_i, indexsmall];
+<span class="keyword">end</span>
+
+SP_aut_subs_std = std(automadata(~isnan(SP_aut_subs_i)), <span class="string">'omitnan'</span>);
+disp(SP_aut_subs_std)
+</pre><pre class="codeoutput">    2.6116
+
+    2.7812
+
+    3.3149
+
+</pre><h2>Theoretical PDFs<a name="9"></a></h2><pre class="codeinput"><span class="comment">%  uniform</span>
+<span class="comment">%  from Bendat and Piersol, mu = (a+b)/2; var = (b-a)^2/12;</span>
+
+<span class="comment">%  SP_aut_std^2 = (b-a)^2/12</span>
+<span class="comment">%  b - a = sqrt(12*(SP_aut_std^2))</span>
+
+<span class="comment">%  b + a = 2* SP_aut_av;</span>
+
+b = (<span class="keyword">...</span>
+    sqrt(<span class="keyword">...</span>
+    12*(SP_aut_std^2)<span class="keyword">...</span>
+    )<span class="keyword">...</span>
+    +(2* SP_aut_av)<span class="keyword">...</span>
+    )/2;
+a = 2* SP_aut_av - b;
+disp(<span class="string">'a: '</span>); disp(a)
+disp(<span class="string">'b: '</span>); disp(b)
+
+<span class="comment">%  and the probability density function is 1/b-a for x between a and b.</span>
+pd = 1/(b-a);
+disp(pd)
+
+<span class="comment">% gaussian</span>
+x = 1:0.1:35;
+y = (1/(SP_aut_std*sqrt(2*pi)))*exp((-(x-SP_aut_av).^2)/(2*SP_aut_std^2));
+
+figure
+plot(x, y)
+ylabel(<span class="string">'Probability Density'</span>)
+xlabel(<span class="string">'Temperature (degC)'</span>)
+
+<span class="comment">% coin toss</span>
+<span class="comment">% assume that a and b are sigma away from mu; each at 0.5 pd</span>
+</pre><pre class="codeoutput">a: 
+   12.8823
+
+b: 
+   22.5165
+
+    0.1038
+
+</pre><img vspace="5" hspace="5" src="Ren_data1_week2_03.png" alt=""> <h2>pdfs<a name="10"></a></h2><pre class="codeinput">edges = 10:1:26;
+figure
+h = histogram(manualdata, edges, <span class="string">'Normalization'</span>, <span class="string">'pdf'</span>);
+hold <span class="string">on</span>
+h2 = histogram(automadata, edges, <span class="string">'Normalization'</span>, <span class="string">'pdf'</span>);
+ylabel(<span class="string">'Probability Density'</span>)
+xlabel(<span class="string">'Temperature (degC)'</span>)
+</pre><img vspace="5" hspace="5" src="Ren_data1_week2_04.png" alt=""> <h2>crude cdfs<a name="11"></a></h2><pre class="codeinput">cdf_manual = cumsum(h.Values);
+cdf_automa = cumsum(h2.Values);
+
+figure
+plot(11:26, cdf_manual)
+hold <span class="string">on</span>
+plot(11:26, cdf_automa)
+ylabel(<span class="string">'Cumulative Probability'</span>)
+xlabel(<span class="string">'Temperature (degC)'</span>)
+
+diff = abs(cdf_automa - cdf_manual);
+maxdiff = max(diff);
+
+<span class="comment">%  parameter (from wikipedia)</span>
+calpha = 1.63; <span class="comment">% alpha = 0.01</span>
+testD = calpha * sqrt( (SP_man_N + SP_aut_N)/ (SP_man_N * SP_aut_N));
+
+disp(<span class="string">'maximum difference (D) : '</span>); disp(maxdiff);
+disp(<span class="string">'D parameter test : '</span>); disp(testD);
+</pre><pre class="codeoutput">maximum difference (D) : 
+    0.0403
+
+D parameter test : 
+    0.0280
+
+</pre><img vspace="5" hspace="5" src="Ren_data1_week2_05.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2015a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%%% Ren_data1_week2.m
+%
+%   HW week 2, Look at temperature from Scripps Pier, manual versus
+%   automatic sampling, compare
+%
+%   A. Ren October 12, 2017
+
+%%  Load Data
+%   Manual Scripps Shore Station Data is in an excel file:
+load('scrippspier_manual_t.mat', 'scrippsmanualdata', ...
+    'header_scrippsmanualdata')           % manually import and create .mat
+
+yearvector = scrippsmanualdata(:, 1);
+monthvector = scrippsmanualdata(:, 2);
+dayvector = scrippsmanualdata(:, 3);
+hourvector = floor(scrippsmanualdata(:, 4)/100);
+minutevector = scrippsmanualdata(:, 4) - (hourvector*100);
+secondvector = repmat([0], size(yearvector, 1), 1);
+
+scrippsmanual_time = datetime(yearvector, monthvector, dayvector, ...
+                              hourvector, minutevector, secondvector, ...
+                              'TimeZone', 'America/Los_Angeles');
+%  note that this includes naT, "not a time" values, for when time was NaN
+%  in the original data
+
+scrippsmanual_stemp = scrippsmanualdata(:, 6);
+scrippsmanual_btemp = scrippsmanualdata(:, 8);
+%  for now, ignore the flag system, col 5, 7, 9 - for time, stemp, btemp
+                          
+%   Automatic Scripps Pier data from thredds server:
+yearlist = 2005:2015;
+SP_temp_2015 = [];
+SP_time_2015 = [];
+SP_depth_2015 = [];
+
+for n = 1:length(yearlist);
+    yearof = yearlist(n);
+    fileloca = sprintf('http://sccoos.org/thredds/dodsC/autoss/scripps_pier-%04d.nc', yearof);
+    %ncdisp(fileloca)
+
+    newtemp = ncread(fileloca, 'temperature');
+    newtime = ncread(fileloca, 'time');
+    newdepth = ncread(fileloca, 'depth');
+    SP_temp_2015 = [SP_temp_2015; newtemp];
+    SP_time_2015 = [SP_time_2015; newtime];
+    SP_depth_2015 = [SP_depth_2015; newdepth];
+end         
+%there is an outlier from visual inspection
+% remove
+badvalue = find(SP_temp_2015 > 30);
+SP_temp_2015(badvalue) = NaN;
+SP_time_2015(badvalue) = NaN;
+SP_depth_2015(badvalue) = NaN;
+
+
+SP_temp_2015 = double(SP_temp_2015);
+SP_time_2015 = double(SP_time_2015);
+SP_depth_2015 = double(SP_depth_2015);
+
+SP_time_2015_mtlabtime = datetime(SP_time_2015, 'ConvertFrom', ...
+    'posixtime', 'TimeZone', 'America/Los_Angeles');
+
+save('scrippspier_auto_t.mat', 'SP_temp_2015', 'SP_time_2015', ...
+    'SP_depth_2015', 'SP_time_2015_mtlabtime')
+
+%%  Basic Plot
+
+figure('Name', 'Temperature, Raw Comparison')
+
+% temperature: automatic
+plot(SP_time_2015_mtlabtime, SP_temp_2015, 'k', 'LineWidth', 0.5)
+
+hold on
+
+% find where 2005 starts
+startday = find(scrippsmanual_time > ...
+           datetime([2005 01 01], 'TimeZone', 'America/Los_Angeles'), ...
+           1, 'first');
+
+% surface temperature: manual
+plot(scrippsmanual_time(startday:end), ...
+    scrippsmanual_stemp(startday:end), 'r', 'LineWidth', 0.5)
+
+% bottom temperature: manual
+plot(scrippsmanual_time(startday:end), ...
+    scrippsmanual_btemp(startday:end), 'b', 'LineWidth', 0.5)
+
+xlim([datenum(2004, 12, 31) datenum(2016, 1, 2)])
+grid on
+xlabel('Time')
+ylabel('Temperature (degC)')
+
+%%   Lots of data, pick one year to zoom in, say 2013
+
+% find time interval
+startday1 = find(...
+    SP_time_2015_mtlabtime > ...
+    datetime([2013 01 01], 'TimeZone', 'America/Los_Angeles'), 1, 'first');
+endday1 = find(...
+    SP_time_2015_mtlabtime > ...
+    datetime([2013 12 31], 'TimeZone', 'America/Los_Angeles'), 1, 'first');
+
+startday2 = find(...
+    scrippsmanual_time > ...
+    datetime([2013 01 01], 'TimeZone', 'America/Los_Angeles'), 1, 'first');
+endday2 = find(scrippsmanual_time > ...
+    datetime([2013 12 31], 'TimeZone', 'America/Los_Angeles'), 1, 'first');
+
+%%   Plot 2013
+figure('Name', 'Temperature, raw, 2013 comparison')
+
+% temperature: automatic
+plot(SP_time_2015_mtlabtime(startday1:endday1), ...
+    SP_temp_2015(startday1:endday1), 'k', 'LineWidth', 0.5)
+
+hold on
+
+% surface temperature: manual
+plot(scrippsmanual_time(startday2:endday2), ...
+    scrippsmanual_stemp(startday2:endday2), 'r', 'LineWidth', 0.7)
+
+% bottom temperature: manual
+plot(scrippsmanual_time(startday2:endday2), ...
+    scrippsmanual_btemp(startday2:endday2), 'Color', [135 206 250]/255, 'LineWidth', 0.5)
+
+grid on
+xlabel('Time')
+ylabel('Temperature (degC)')
+
+%%   Manual Temperature Record : use average of surface and bottom
+
+scrippsmanual_avtemp = (scrippsmanual_stemp + scrippsmanual_btemp)/2;
+
+%%  Means and Error of Mean
+%   since manual record ends on Oct 31, 2015, use automatic record until
+%   that day
+%   since automatic record starts on Jun 16, 2005, use manual record
+%   starting then
+
+endday4 = find(SP_time_2015_mtlabtime > ...
+               datetime([2015 10 31 9 25 0], 'TimeZone', 'America/Los_Angeles'), ...
+               1, 'first');
+startday4 = find(scrippsmanual_time > ...
+               datetime([2005 06 16], 'TimeZone', 'America/Los_Angeles'), ...
+               1, 'first');
+
+manualdata = scrippsmanual_avtemp(startday4:end);
+automadata = SP_temp_2015(1:endday4);
+
+%   calculate mean 
+SP_man_av = mean(manualdata, 'omitnan');  disp('mean: '); disp(SP_man_av)
+SP_aut_av = mean(automadata, 'omitnan');  disp(SP_aut_av)
+
+%   how many data? N?
+SP_man_N = sum(~isnan(manualdata));  disp('N: '); disp(SP_man_N)
+SP_aut_N = sum(~isnan(automadata));  disp(SP_aut_N)
+
+%   error of mean
+SP_man_av_std = std(manualdata, 'omitnan')/ sqrt(SP_man_N);
+SP_aut_av_std = std(automadata, 'omitnan')/ sqrt(SP_aut_N);
+
+disp('error of mean: '); disp(SP_man_av_std); disp(SP_aut_av_std)
+
+%%  Variance / Standard deviation
+
+SP_man_std = std(manualdata, 'omitnan'); disp(SP_man_std)
+SP_aut_std = std(automadata, 'omitnan'); disp(SP_aut_std)
+
+%   subsample automatic data to find nearest neighbor to manual data
+manualtime = scrippsmanual_time(startday4:end);
+SP_aut_subs_i = [];
+for n = 1:length(manualtime)
+    subtractvalue = abs(SP_time_2015_mtlabtime - manualtime(n));
+    subtractvalue = seconds(subtractvalue);
+    indexsmall = find(subtractvalue == min(subtractvalue));
+    if length(indexsmall) >1 % sometimes there is a duplicate "closest" pt
+        indexsmall = indexsmall(1);
+    elseif isempty(indexsmall);
+        %disp('help'); disp(n);
+        indexsmall = NaN;
+    end
+    SP_aut_subs_i = [SP_aut_subs_i, indexsmall];
+end
+
+SP_aut_subs_std = std(automadata(~isnan(SP_aut_subs_i)), 'omitnan');
+disp(SP_aut_subs_std)
+
+%% Theoretical PDFs
+
+%  uniform
+%  from Bendat and Piersol, mu = (a+b)/2; var = (b-a)^2/12;
+
+%  SP_aut_std^2 = (b-a)^2/12
+%  b - a = sqrt(12*(SP_aut_std^2))
+
+%  b + a = 2* SP_aut_av;
+
+b = (...
+    sqrt(...
+    12*(SP_aut_std^2)...
+    )...
+    +(2* SP_aut_av)...
+    )/2;
+a = 2* SP_aut_av - b;
+disp('a: '); disp(a)
+disp('b: '); disp(b)
+
+%  and the probability density function is 1/b-a for x between a and b.
+pd = 1/(b-a);
+disp(pd)
+
+% gaussian
+x = 1:0.1:35;
+y = (1/(SP_aut_std*sqrt(2*pi)))*exp((-(x-SP_aut_av).^2)/(2*SP_aut_std^2));
+
+figure
+plot(x, y)
+ylabel('Probability Density')
+xlabel('Temperature (degC)')
+
+% coin toss
+% assume that a and b are sigma away from mu; each at 0.5 pd
+
+%% pdfs
+edges = 10:1:26;
+figure
+h = histogram(manualdata, edges, 'Normalization', 'pdf');
+hold on
+h2 = histogram(automadata, edges, 'Normalization', 'pdf');
+ylabel('Probability Density')
+xlabel('Temperature (degC)')
+
+%% crude cdfs
+
+cdf_manual = cumsum(h.Values);
+cdf_automa = cumsum(h2.Values);
+
+figure
+plot(11:26, cdf_manual)
+hold on
+plot(11:26, cdf_automa)
+ylabel('Cumulative Probability')
+xlabel('Temperature (degC)')
+
+diff = abs(cdf_automa - cdf_manual);
+maxdiff = max(diff);
+
+%  parameter (from wikipedia)
+calpha = 1.63; % alpha = 0.01
+testD = calpha * sqrt( (SP_man_N + SP_aut_N)/ (SP_man_N * SP_aut_N));
+
+disp('maximum difference (D) : '); disp(maxdiff);
+disp('D parameter test : '); disp(testD);
+
+
+
+
+
+
+##### SOURCE END #####
+--></body></html>

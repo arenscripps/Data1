@@ -1,0 +1,239 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Ren_data1_week1</title><meta name="generator" content="MATLAB 8.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2017-10-03"><meta name="DC.source" content="Ren_data1_week1.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1></h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Ren_data1_week1.m</a></li></ul></div><h2>Ren_data1_week1.m<a name="1"></a></h2><pre class="language-matlab">HW <span class="string">week</span> <span class="string">1</span>, Look <span class="string">at</span> <span class="string">Temperatures</span> <span class="string">from</span> <span class="string">Scripps</span> <span class="string">Pier</span>
+</pre><pre class="language-matlab">A. Ren September <span class="string">29</span>, 2017
+</pre><pre class="codeinput"><span class="comment">% USER INPUT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+timeperiod = <span class="string">'from2005to2017'</span>;
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+
+<span class="keyword">switch</span> timeperiod
+
+    <span class="keyword">case</span> <span class="string">'only2017'</span>
+        fileloca = <span class="string">'http://sccoos.org/thredds/dodsC/autoss/scripps_pier-2017.nc'</span>;
+        <span class="comment">%ncdisp(fileloca)</span>
+
+        SP_temp_2017 = ncread(fileloca, <span class="string">'temperature'</span>);
+        SP_time_2017 = ncread(fileloca, <span class="string">'time'</span>);
+        SP_depth_2017 = ncread(fileloca, <span class="string">'depth'</span>);
+
+    <span class="keyword">case</span> <span class="string">'from2005to2017'</span>
+        yearlist = 2005:2017;
+        SP_temp_2017 = [];
+        SP_time_2017 = [];
+        SP_depth_2017 = [];
+        <span class="keyword">for</span> n = 1:length(yearlist);
+            yearof = yearlist(n);
+            fileloca = sprintf(<span class="string">'http://sccoos.org/thredds/dodsC/autoss/scripps_pier-%04d.nc'</span>, yearof);
+            <span class="comment">%ncdisp(fileloca)</span>
+
+            newtemp = ncread(fileloca, <span class="string">'temperature'</span>);
+            newtime = ncread(fileloca, <span class="string">'time'</span>);
+            newdepth = ncread(fileloca, <span class="string">'depth'</span>);
+            SP_temp_2017 = [SP_temp_2017; newtemp];
+            SP_time_2017 = [SP_time_2017; newtime];
+            SP_depth_2017 = [SP_depth_2017; newdepth];
+        <span class="keyword">end</span>
+    <span class="comment">%there is an outlier from visual inspection</span>
+    <span class="comment">% remove</span>
+    badvalue = find(SP_temp_2017 &gt; 30);
+    SP_temp_2017(badvalue) = NaN;
+    SP_time_2017(badvalue) = NaN;
+    SP_depth_2017(badvalue) = NaN;
+<span class="keyword">end</span>
+
+SP_temp_2017 = double(SP_temp_2017);
+SP_time_2017 = double(SP_time_2017);
+SP_depth_2017 = double(SP_depth_2017);
+
+SP_time_2017_mtlabtime = datetime(SP_time_2017, <span class="string">'ConvertFrom'</span>, <span class="keyword">...</span>
+    <span class="string">'posixtime'</span>, <span class="string">'TimeZone'</span>, <span class="string">'America/Los_Angeles'</span>);
+</pre><pre class="codeinput">figure(<span class="string">'Name'</span>, <span class="string">'Temperature in 2017'</span>)
+plot(SP_time_2017_mtlabtime, SP_temp_2017, <span class="string">'k'</span>, <span class="string">'LineWidth'</span>, 1)
+
+<span class="keyword">switch</span> timeperiod
+    <span class="keyword">case</span> <span class="string">'only2017'</span>
+       dateticknum = 3;
+       datetick(<span class="string">'x'</span>, dateticknum)
+       xlim([datenum(2016, 12, 31) datenum(2017, 10, 1)])
+    <span class="keyword">case</span> <span class="string">'from2005to2017'</span>
+       <span class="comment">%dateticknum = 10;</span>
+       xlim([datenum(2004, 12, 31) datenum(2017, 10, 1)])
+<span class="keyword">end</span>
+
+grid <span class="string">on</span>
+ylabel(<span class="string">'Temperature (^{\circ}C)'</span>)
+xlabel(<span class="string">'Time (month)'</span>)
+</pre><img vspace="5" hspace="5" src="Ren_data1_week1_01.png" alt=""> <pre class="codeinput">meantemp2017 = mean(SP_temp_2017, <span class="string">'omitnan'</span>); disp(<span class="string">'mean = '</span>); disp(meantemp2017)
+stddtemp2017 = std(SP_temp_2017, <span class="string">'omitnan'</span>); disp(<span class="string">'std = '</span>); disp(stddtemp2017)
+</pre><pre class="codeoutput">mean = 
+   17.7763
+
+std = 
+    2.7743
+
+</pre><pre class="codeinput">figure(<span class="string">'Name'</span>, <span class="string">'Probability Density Function, Temperature 2017'</span>)
+h = histogram(SP_temp_2017, <span class="string">'Normalization'</span>, <span class="string">'pdf'</span>);
+grid <span class="string">on</span>
+xlabel(<span class="string">'Temperature (^{\circ}C)'</span>)
+ylabel(<span class="string">'Percentage'</span>)
+xlim([10 30])
+</pre><img vspace="5" hspace="5" src="Ren_data1_week1_02.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2015a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%%% Ren_data1_week1.m
+%
+%   HW week 1, Look at Temperatures from Scripps Pier
+%
+%   A. Ren September 29, 2017
+
+% USER INPUT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+timeperiod = 'from2005to2017';
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+switch timeperiod
+    
+    case 'only2017'
+        fileloca = 'http://sccoos.org/thredds/dodsC/autoss/scripps_pier-2017.nc';
+        %ncdisp(fileloca)
+        
+        SP_temp_2017 = ncread(fileloca, 'temperature');
+        SP_time_2017 = ncread(fileloca, 'time');
+        SP_depth_2017 = ncread(fileloca, 'depth');
+        
+    case 'from2005to2017'
+        yearlist = 2005:2017;
+        SP_temp_2017 = [];
+        SP_time_2017 = [];
+        SP_depth_2017 = [];
+        for n = 1:length(yearlist);
+            yearof = yearlist(n);
+            fileloca = sprintf('http://sccoos.org/thredds/dodsC/autoss/scripps_pier-%04d.nc', yearof);
+            %ncdisp(fileloca)
+            
+            newtemp = ncread(fileloca, 'temperature');
+            newtime = ncread(fileloca, 'time');
+            newdepth = ncread(fileloca, 'depth');
+            SP_temp_2017 = [SP_temp_2017; newtemp];
+            SP_time_2017 = [SP_time_2017; newtime];
+            SP_depth_2017 = [SP_depth_2017; newdepth];
+        end         
+    %there is an outlier from visual inspection
+    % remove
+    badvalue = find(SP_temp_2017 > 30);
+    SP_temp_2017(badvalue) = NaN;
+    SP_time_2017(badvalue) = NaN;
+    SP_depth_2017(badvalue) = NaN;
+end
+
+SP_temp_2017 = double(SP_temp_2017);
+SP_time_2017 = double(SP_time_2017);
+SP_depth_2017 = double(SP_depth_2017);
+
+SP_time_2017_mtlabtime = datetime(SP_time_2017, 'ConvertFrom', ...
+    'posixtime', 'TimeZone', 'America/Los_Angeles');
+
+%%
+figure('Name', 'Temperature in 2017')
+plot(SP_time_2017_mtlabtime, SP_temp_2017, 'k', 'LineWidth', 1)
+
+switch timeperiod
+    case 'only2017'
+       dateticknum = 3;
+       datetick('x', dateticknum)
+       xlim([datenum(2016, 12, 31) datenum(2017, 10, 1)])
+    case 'from2005to2017'
+       %dateticknum = 10;
+       xlim([datenum(2004, 12, 31) datenum(2017, 10, 1)])
+end
+
+grid on
+ylabel('Temperature (^{\circ}C)')
+xlabel('Time (month)')
+
+
+%%
+meantemp2017 = mean(SP_temp_2017, 'omitnan'); disp('mean = '); disp(meantemp2017)
+stddtemp2017 = std(SP_temp_2017, 'omitnan'); disp('std = '); disp(stddtemp2017)
+
+%%
+figure('Name', 'Probability Density Function, Temperature 2017')
+h = histogram(SP_temp_2017, 'Normalization', 'pdf');
+grid on
+xlabel('Temperature (^{\circ}C)')
+ylabel('Percentage')
+xlim([10 30])
+
+
+
+
+
+
+##### SOURCE END #####
+--></body></html>

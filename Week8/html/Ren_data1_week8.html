@@ -1,0 +1,440 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Ren_data1_week8</title><meta name="generator" content="MATLAB 8.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2017-11-30"><meta name="DC.source" content="Ren_data1_week8.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1></h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Ren_data1_week8.m</a></li><li><a href="#2">Aliasing</a></li><li><a href="#3">Class examples</a></li><li><a href="#4">Aliasing for new SWOT satellite</a></li><li><a href="#5">Frequency Wavenumber Spectra</a></li><li><a href="#6">Hovmoller Plot</a></li><li><a href="#7">Back to frequency wavenumber</a></li></ul></div><h2>Ren_data1_week8.m<a name="1"></a></h2><pre class="language-matlab">Look <span class="string">at</span> <span class="string">aliasing</span> <span class="string">and</span> <span class="string">frequency</span> <span class="string">wavenumber</span> <span class="string">spectra</span>
+</pre><pre class="language-matlab">A. Ren Nov. 29, 2017
+</pre><h2>Aliasing<a name="2"></a></h2><h2>Class examples<a name="3"></a></h2><pre class="language-matlab">when <span class="string">sampling</span> <span class="string">period</span> <span class="string">is</span> <span class="string">shorter</span> <span class="string">than</span> <span class="string">the</span> <span class="string">period:</span>
+9 hour <span class="string">sampling</span>, 12 hour <span class="string">oscillation</span>
+nyquest <span class="string">of</span> <span class="string">sampling</span> <span class="string">is</span>
+<span class="keyword">for</span> 15 days <span class="string">of</span> <span class="string">sampling</span>, the <span class="string">fundamental</span> <span class="string">frequency</span> <span class="string">f</span> <span class="string">=</span> <span class="string">1</span> <span class="string">cycle/15</span> <span class="string">days</span>
+the <span class="string">total</span> <span class="string">number</span> <span class="string">of</span> <span class="string">cycles</span> <span class="string">resolved</span> <span class="string">is</span> <span class="string">(15 *24 hours / 9 hours)/2</span> <span class="string">which</span>
+is <span class="string">40/2</span> <span class="string">=</span> <span class="string">20.</span>
+the <span class="string">nyquest</span> <span class="string">frequency</span> <span class="string">is</span> <span class="string">20/15</span> <span class="string">cycles</span> <span class="string">per</span> <span class="string">day</span> <span class="string">or</span> <span class="string">20f</span>
+however <span class="string">the</span> <span class="string">12</span> <span class="string">hour</span> <span class="string">oscillation</span> <span class="string">means</span> <span class="string">the</span> <span class="string">total</span> <span class="string">number</span> <span class="string">of</span> <span class="string">cycles</span>
+resolved <span class="string">in</span> <span class="string">15</span> <span class="string">days</span> <span class="string">is</span> <span class="string">(15*24/12)</span> <span class="string">which</span> <span class="string">is</span> <span class="string">30</span>
+it's frequency <span class="string">is</span> <span class="string">30</span> <span class="string">cycles/15</span> <span class="string">days</span> <span class="string">which</span> <span class="string">is</span> <span class="string">30f.</span>  <span class="string">This</span> <span class="string">is</span> <span class="string">beyond</span> <span class="string">the</span>
+nyquest <span class="string">frequency</span> <span class="string">of</span> <span class="string">measurement.</span>
+20/15 + 10/15 = 30/15; 20f +10f = 30f; This <span class="string">aliases</span> <span class="string">back</span> <span class="string">into</span> <span class="string">20f</span> <span class="string">-</span> <span class="string">10f</span>
+= 10f.
+</pre><pre class="language-matlab"><span class="keyword">if</span> the nyquist <span class="string">frequency</span> <span class="string">fits</span> <span class="string">multiple</span> <span class="string">times</span> <span class="string">"in"</span> <span class="string">the</span> <span class="string">true</span> <span class="string">frequency</span>,
+then <span class="string">the</span> <span class="string">formula</span> <span class="string">depends</span> <span class="string">on</span> <span class="string">M</span>, the <span class="string">multiple</span>, whether <span class="string">it</span> <span class="string">is</span> <span class="string">even</span> <span class="string">or</span> <span class="string">odd.</span>
+Think <span class="string">about</span> <span class="string">folding</span> <span class="string">up</span> <span class="string">or</span> <span class="string">down.</span>
+</pre><pre class="codeinput"><span class="comment">% User Input</span>
+Peri_sampling_indays = 9.9156;
+Peri_phenom_inhours = 12.4206;
+
+<span class="comment">% compute frequencies</span>
+f_sampling=1/(Peri_sampling_indays); <span class="comment">% cycles per day</span>
+f_phenomenon=24/Peri_phenom_inhours; <span class="comment">% cycles per day</span>
+f_Nyquist=f_sampling/2;
+
+<span class="comment">% compute the integer ratio of the two frequencies.</span>
+<span class="comment">% In examples above, this was one.</span>
+M = floor(f_phenomenon/f_Nyquist)
+
+<span class="comment">% alias</span>
+alias = f_phenomenon - floor(f_phenomenon/f_Nyquist)*f_Nyquist;
+<span class="comment">% Note: if M is odd then</span>
+<span class="keyword">if</span>(rem(M,2)~=0)
+    alias=f_Nyquist-alias;
+<span class="keyword">end</span>
+<span class="comment">% Display period of alias frequency in days</span>
+aliasperiod = 1/alias
+</pre><pre class="codeoutput">
+M =
+
+    38
+
+
+aliasperiod =
+
+   62.1068
+
+</pre><h2>Aliasing for new SWOT satellite<a name="4"></a></h2><pre class="codeinput">period_orbit = [0.99349 20.86455]; <span class="comment">% in days,</span>
+peri_oname = {<span class="string">'Fast sampling:'</span>, <span class="string">'Slow sampling:'</span>};
+period_pheno = [24.00 12.42]; <span class="comment">% in hours</span>
+peri_pname = {<span class="string">'S1 Solar diurnal'</span>, <span class="string">'M2 Principal lunar'</span>};
+<span class="comment">%  S1 Solar diurnal 24.00</span>
+<span class="comment">%M2 Principal lunar 12.42</span>
+
+<span class="keyword">for</span> n = 1:2
+    <span class="keyword">for</span> m = 1:2
+        Peri_sampling_indays = period_orbit(n);
+        Peri_phenom_inhours = period_pheno(m);
+
+        disp(peri_oname{n}); disp(peri_pname{m});
+
+        <span class="comment">% compute frequencies</span>
+        f_sampling=1/(Peri_sampling_indays); <span class="comment">% cycles per day</span>
+        f_phenomenon=24/Peri_phenom_inhours; <span class="comment">% cycles per day</span>
+        f_Nyquist=f_sampling/2;
+
+        <span class="comment">% compute the integer ratio of the two frequencies.</span>
+        <span class="comment">% In examples above, this was one.</span>
+        M = floor(f_phenomenon/f_Nyquist)
+
+        <span class="comment">% alias</span>
+        alias = f_phenomenon - floor(f_phenomenon/f_Nyquist)*f_Nyquist;
+        <span class="comment">% Note: if M is odd then</span>
+        <span class="keyword">if</span>(rem(M,2)~=0)
+            alias=f_Nyquist-alias;
+        <span class="keyword">end</span>
+        <span class="comment">% Display period of alias frequency in days</span>
+        aliasperiod = 1/alias   <span class="comment">% days</span>
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre><pre class="codeoutput">Fast sampling:
+S1 Solar diurnal
+
+M =
+
+     1
+
+
+aliasperiod =
+
+  152.6098
+
+Fast sampling:
+M2 Principal lunar
+
+M =
+
+     3
+
+
+aliasperiod =
+
+   12.3857
+
+Slow sampling:
+S1 Solar diurnal
+
+M =
+
+    41
+
+
+aliasperiod =
+
+  154.0388
+
+Slow sampling:
+M2 Principal lunar
+
+M =
+
+    80
+
+
+aliasperiod =
+
+   65.6178
+
+</pre><h2>Frequency Wavenumber Spectra<a name="5"></a></h2><pre class="codeinput"><span class="comment">%   Deal with data</span>
+<span class="comment">% ncdisp('sst.mnmean.nc')</span>
+filename = <span class="string">'sst.mnmean.nc'</span>;
+mtime = ncread(filename, <span class="string">'time'</span>);
+mlat = ncread(filename, <span class="string">'lat'</span>);
+mlon = ncread(filename, <span class="string">'lon'</span>);
+dst = datenum(1800, 1, 1);
+mtime_mt = mtime+dst;
+
+<span class="comment">%   Find segment of interest in lat and lon</span>
+mlat_tropic = -0.5;
+mlat_subtro = -29.5;
+
+mlon_tr = [219.5 269.5];
+mlon_sb = [189.5 249.5];
+
+a1 = find(mlat == mlat_tropic);
+a2 = find(mlat == mlat_subtro);
+b1 = find(mlon == mlon_tr(1));
+b2 = find(mlon == mlon_sb(1));
+
+c1 = length(mlon_tr(1):mlon_tr(2));
+c2 = length(mlon_sb(1):mlon_sb(2));
+
+msst_tr = ncread(filename, <span class="string">'sst'</span>, [b1, a1, 1], [c1, 1, length(mtime)]);
+msst_sb = ncread(filename, <span class="string">'sst'</span>, [b2, a2, 1], [c2, 1, length(mtime)]);
+</pre><h2>Hovmoller Plot<a name="6"></a></h2><pre class="language-matlab">want <span class="string">longitude</span> <span class="string">on</span> <span class="string">x</span> <span class="string">axis</span> <span class="string">and</span> <span class="string">time</span> <span class="string">on</span> <span class="string">y</span> <span class="string">axis</span>
+</pre><pre class="codeinput">msst_tr_plot = squeeze(msst_tr)';
+msst_sb_plot = squeeze(msst_sb)';
+
+figure(<span class="string">'Name'</span>, <span class="string">'Hofmoller Plots'</span>)
+subplot(1, 2, 1)
+    contourf(mlon_tr(1):mlon_tr(2), mtime_mt, msst_tr_plot, <span class="string">'lineColor'</span>, <span class="string">'none'</span>)
+    datetick(<span class="string">'y'</span>, 10)
+    title(<span class="string">'Tropics'</span>)
+    xlabel(<span class="string">'Longitude'</span>)
+    ylabel(<span class="string">'Time'</span>)
+    ylim([datenum(1981, 1, 1) datenum(2017, 1, 1)])
+    caxis([15 30])
+    colorbar
+subplot(1, 2, 2)
+    contourf(mlon_sb(1):mlon_sb(2), mtime_mt, msst_sb_plot, <span class="string">'LineColor'</span>, <span class="string">'none'</span>)
+    datetick(<span class="string">'y'</span>, 10)
+    title(<span class="string">'Subtropics'</span>)
+    xlabel(<span class="string">'Longitude'</span>)
+    ylim([datenum(1981, 1, 1) datenum(2017, 1, 1)])
+    caxis([15 30])
+    colorbar
+
+figure(<span class="string">'Name'</span>, <span class="string">'Hofmoller Plot - zoomed in'</span>)
+subplot(1, 2, 1)
+    contourf(mlon_tr(1):mlon_tr(2), mtime_mt(end-40:end), <span class="keyword">...</span>
+        msst_tr_plot(end-40:end, :), <span class="string">'lineColor'</span>, <span class="string">'none'</span>)
+    datetick(<span class="string">'y'</span>, 10)
+    title(<span class="string">'Tropics'</span>)
+    xlabel(<span class="string">'Longitude'</span>)
+    ylabel(<span class="string">'Time'</span>)
+    <span class="comment">%ylim([datenum(1981, 1, 1) datenum(2017, 1, 1)])</span>
+    caxis([15 30])
+    colorbar
+subplot(1, 2, 2)
+    contourf(mlon_sb(1):mlon_sb(2), mtime_mt(end-40:end), <span class="keyword">...</span>
+        msst_sb_plot(end-40:end, :), <span class="string">'LineColor'</span>, <span class="string">'none'</span>)
+    datetick(<span class="string">'y'</span>, 10)
+    title(<span class="string">'Subtropics'</span>)
+    xlabel(<span class="string">'Longitude'</span>)
+    <span class="comment">%ylim([datenum(1981, 1, 1) datenum(2017, 1, 1)])</span>
+    caxis([15 30])
+    colorbar
+</pre><img vspace="5" hspace="5" src="Ren_data1_week8_01.png" alt=""> <img vspace="5" hspace="5" src="Ren_data1_week8_02.png" alt=""> <h2>Back to frequency wavenumber<a name="7"></a></h2><pre class="codeinput">st = fftshift(fft2(msst_tr_plot))/(415*51);
+spec = abs(st);
+figure
+imagesc(spec)
+</pre><img vspace="5" hspace="5" src="Ren_data1_week8_03.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2015a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%%% Ren_data1_week8.m
+%
+%   Look at aliasing and frequency wavenumber spectra
+%
+%   A. Ren Nov. 29, 2017
+
+%%  Aliasing
+
+%%  Class examples
+%   when sampling period is shorter than the period:
+%   9 hour sampling, 12 hour oscillation
+%   nyquest of sampling is
+%   for 15 days of sampling, the fundamental frequency f = 1 cycle/15 days
+%   the total number of cycles resolved is (15 *24 hours / 9 hours)/2 which
+%   is 40/2 = 20.
+%   the nyquest frequency is 20/15 cycles per day or 20f
+%   however the 12 hour oscillation means the total number of cycles
+%   resolved in 15 days is (15*24/12) which is 30
+%   it's frequency is 30 cycles/15 days which is 30f.  This is beyond the
+%   nyquest frequency of measurement.
+%   20/15 + 10/15 = 30/15; 20f +10f = 30f; This aliases back into 20f - 10f
+%   = 10f.
+%
+%   if the nyquist frequency fits multiple times "in" the true frequency,
+%   then the formula depends on M, the multiple, whether it is even or odd.
+%   Think about folding up or down.
+
+% User Input
+Peri_sampling_indays = 9.9156;
+Peri_phenom_inhours = 12.4206;
+
+% compute frequencies
+f_sampling=1/(Peri_sampling_indays); % cycles per day
+f_phenomenon=24/Peri_phenom_inhours; % cycles per day
+f_Nyquist=f_sampling/2;
+
+% compute the integer ratio of the two frequencies.
+% In examples above, this was one.
+M = floor(f_phenomenon/f_Nyquist) 
+
+% alias
+alias = f_phenomenon - floor(f_phenomenon/f_Nyquist)*f_Nyquist;
+% Note: if M is odd then
+if(rem(M,2)~=0)
+    alias=f_Nyquist-alias; 
+end
+% Display period of alias frequency in days
+aliasperiod = 1/alias
+
+%%  Aliasing for new SWOT satellite
+period_orbit = [0.99349 20.86455]; % in days, 
+peri_oname = {'Fast sampling:', 'Slow sampling:'};
+period_pheno = [24.00 12.42]; % in hours
+peri_pname = {'S1 Solar diurnal', 'M2 Principal lunar'};
+%  S1 Solar diurnal 24.00
+%M2 Principal lunar 12.42
+
+for n = 1:2
+    for m = 1:2
+        Peri_sampling_indays = period_orbit(n);
+        Peri_phenom_inhours = period_pheno(m);
+        
+        disp(peri_oname{n}); disp(peri_pname{m});
+        
+        % compute frequencies
+        f_sampling=1/(Peri_sampling_indays); % cycles per day
+        f_phenomenon=24/Peri_phenom_inhours; % cycles per day
+        f_Nyquist=f_sampling/2;
+
+        % compute the integer ratio of the two frequencies.
+        % In examples above, this was one.
+        M = floor(f_phenomenon/f_Nyquist) 
+
+        % alias
+        alias = f_phenomenon - floor(f_phenomenon/f_Nyquist)*f_Nyquist;
+        % Note: if M is odd then
+        if(rem(M,2)~=0)
+            alias=f_Nyquist-alias; 
+        end
+        % Display period of alias frequency in days
+        aliasperiod = 1/alias   % days
+    end
+end
+
+%%  Frequency Wavenumber Spectra
+
+%   Deal with data
+% ncdisp('sst.mnmean.nc')
+filename = 'sst.mnmean.nc';
+mtime = ncread(filename, 'time');
+mlat = ncread(filename, 'lat');
+mlon = ncread(filename, 'lon');
+dst = datenum(1800, 1, 1);
+mtime_mt = mtime+dst;
+
+%   Find segment of interest in lat and lon
+mlat_tropic = -0.5;
+mlat_subtro = -29.5;
+
+mlon_tr = [219.5 269.5];
+mlon_sb = [189.5 249.5];    
+
+a1 = find(mlat == mlat_tropic);
+a2 = find(mlat == mlat_subtro);
+b1 = find(mlon == mlon_tr(1));
+b2 = find(mlon == mlon_sb(1));
+
+c1 = length(mlon_tr(1):mlon_tr(2));
+c2 = length(mlon_sb(1):mlon_sb(2));
+
+msst_tr = ncread(filename, 'sst', [b1, a1, 1], [c1, 1, length(mtime)]);
+msst_sb = ncread(filename, 'sst', [b2, a2, 1], [c2, 1, length(mtime)]);
+
+%%   Hovmoller Plot
+%   want longitude on x axis and time on y axis
+
+msst_tr_plot = squeeze(msst_tr)';
+msst_sb_plot = squeeze(msst_sb)';
+
+figure('Name', 'Hofmoller Plots')
+subplot(1, 2, 1)
+    contourf(mlon_tr(1):mlon_tr(2), mtime_mt, msst_tr_plot, 'lineColor', 'none')
+    datetick('y', 10)
+    title('Tropics')
+    xlabel('Longitude')
+    ylabel('Time')
+    ylim([datenum(1981, 1, 1) datenum(2017, 1, 1)])
+    caxis([15 30])
+    colorbar
+subplot(1, 2, 2)
+    contourf(mlon_sb(1):mlon_sb(2), mtime_mt, msst_sb_plot, 'LineColor', 'none')
+    datetick('y', 10)
+    title('Subtropics')
+    xlabel('Longitude')
+    ylim([datenum(1981, 1, 1) datenum(2017, 1, 1)])
+    caxis([15 30])
+    colorbar
+
+figure('Name', 'Hofmoller Plot - zoomed in')
+subplot(1, 2, 1)
+    contourf(mlon_tr(1):mlon_tr(2), mtime_mt(end-40:end), ...
+        msst_tr_plot(end-40:end, :), 'lineColor', 'none')
+    datetick('y', 10)
+    title('Tropics')
+    xlabel('Longitude')
+    ylabel('Time')
+    %ylim([datenum(1981, 1, 1) datenum(2017, 1, 1)])
+    caxis([15 30])
+    colorbar
+subplot(1, 2, 2)
+    contourf(mlon_sb(1):mlon_sb(2), mtime_mt(end-40:end), ...
+        msst_sb_plot(end-40:end, :), 'LineColor', 'none')
+    datetick('y', 10)
+    title('Subtropics')
+    xlabel('Longitude')
+    %ylim([datenum(1981, 1, 1) datenum(2017, 1, 1)])
+    caxis([15 30])
+    colorbar
+    
+%%  Back to frequency wavenumber
+
+st = fftshift(fft2(msst_tr_plot))/(415*51);
+spec = abs(st);
+figure
+imagesc(spec)
+##### SOURCE END #####
+--></body></html>

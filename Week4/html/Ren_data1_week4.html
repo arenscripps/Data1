@@ -1,0 +1,347 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Ren_data1_week4</title><meta name="generator" content="MATLAB 8.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2017-10-25"><meta name="DC.source" content="Ren_data1_week4.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1></h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Ren_data1_week4.m</a></li><li><a href="#2">load data</a></li><li><a href="#3">want evenly spaced data: use January 2015</a></li><li><a href="#4">check for NaN</a></li><li><a href="#5">fft</a></li><li><a href="#7">we only need the first N/2+1</a></li><li><a href="#10">amplitude of major peaks</a></li><li><a href="#11">amplitude - spectral power</a></li><li><a href="#12">derivative</a></li></ul></div><h2>Ren_data1_week4.m<a name="1"></a></h2><pre class="language-matlab">Sea <span class="string">surface</span> <span class="string">pressure</span>, fitting <span class="string">with</span> <span class="string">Fourier</span> <span class="string">coefficients</span>
+</pre><pre class="language-matlab">A. Ren October <span class="string">26</span>, 2017
+</pre><h2>load data<a name="2"></a></h2><pre class="codeinput">load(<span class="string">'../Week3/scrippspier_auto_p.mat'</span>)
+</pre><h2>want evenly spaced data: use January 2015<a name="3"></a></h2><pre class="codeinput">dataspacing = diff(SP_time_2015_mtlabtime);
+
+inde = find(dataspacing ~= duration(0, 6, 1), 1, <span class="string">'first'</span>);
+disp(<span class="string">'time increment non-uniform after: '</span>);
+disp(SP_time_2015_mtlabtime(inde))
+
+sampledat_w = SP_press_2015(1:inde);
+sampletim_w = SP_time_2015_mtlabtime(1:inde);
+sampletel_w = sampletim_w - sampletim_w(1); <span class="comment">%elapsed time since t0</span>
+sampletel_w = days(sampletel_w);           <span class="comment">%convert to days elapsed</span>
+</pre><pre class="codeoutput">time increment non-uniform after: 
+   04-Feb-2015 09:24:36
+
+</pre><h2>check for NaN<a name="4"></a></h2><pre class="codeinput">sum(isnan(sampledat_w))
+</pre><pre class="codeoutput">
+ans =
+
+     0
+
+</pre><h2>fft<a name="5"></a></h2><pre class="codeinput">coefficients = fft(sampledat_w);
+
+realpart = real(coefficients);
+imagpart = imag(coefficients);
+
+N = length(sampledat_w);
+scale = 1/361 *3600*24; <span class="comment">% cycles per day</span>
+
+frequencyaxis = scale* (0:N/2)/N; <span class="comment">% even number of samples, N</span>
+
+negfreq = -frequencyaxis(2:end);
+totfreq = [fliplr(negfreq) frequencyaxis(2:end)];
+</pre><pre class="codeinput">figure(<span class="string">'Name'</span>, <span class="string">'Plotting Fourier Coefficients-full'</span>)
+subplot(2, 1, 1)
+    plot(totfreq, log(realpart))
+    title(<span class="string">'real'</span>)
+    xlabel(<span class="string">'cycles per day'</span>)
+    ylabel(<span class="string">'log(real(coefficient))'</span>)
+    grid <span class="string">on</span>
+subplot(2, 1, 2)
+    plot(totfreq, log(imagpart))
+    title(<span class="string">'imaginary'</span>)
+    xlabel(<span class="string">'cycles per day'</span>)
+    ylabel(<span class="string">'log(imag(coefficient))'</span>)
+    grid <span class="string">on</span>
+</pre><pre class="codeoutput">Warning: Imaginary parts of complex X and/or Y arguments
+ignored 
+Warning: Imaginary parts of complex X and/or Y arguments
+ignored 
+</pre><img vspace="5" hspace="5" src="Ren_data1_week4_01.png" alt=""> <h2>we only need the first N/2+1<a name="7"></a></h2><pre class="codeinput">coeffi = coefficients(1:N/2+1);   <span class="comment">% because N is even, choose until N/2+1</span>
+
+rp = real(coeffi);
+ip = imag(coeffi);
+</pre><pre class="codeinput">figure(<span class="string">'Name'</span>, <span class="string">'Plotting Fourier Coefficients'</span>)
+subplot(2, 1, 1)
+    plot(frequencyaxis, log(rp))
+    title(<span class="string">'real'</span>)
+    xlabel(<span class="string">'cycles per day'</span>)
+    ylabel(<span class="string">'log(real(coefficient))'</span>)
+    grid <span class="string">on</span>
+subplot(2, 1, 2)
+    plot(frequencyaxis, log(ip))
+    title(<span class="string">'imaginary'</span>)
+    xlabel(<span class="string">'cycles per day'</span>)
+    ylabel(<span class="string">'log(imag(coefficient))'</span>)
+    grid <span class="string">on</span>
+</pre><pre class="codeoutput">Warning: Imaginary parts of complex X and/or Y arguments
+ignored 
+Warning: Imaginary parts of complex X and/or Y arguments
+ignored 
+</pre><img vspace="5" hspace="5" src="Ren_data1_week4_02.png" alt=""> <pre class="codeinput">figure(<span class="string">'Name'</span>, <span class="string">'Plotting Fourier Coefficients'</span>)
+subplot(2, 1, 1)
+    plot(frequencyaxis, log(rp))
+    title(<span class="string">'real'</span>)
+    xlabel(<span class="string">'cycles per day'</span>)
+    ylabel(<span class="string">'log(real(coefficient))'</span>)
+    grid <span class="string">on</span>
+    xlim([0, 5])
+subplot(2, 1, 2)
+    plot(frequencyaxis, log(ip))
+    title(<span class="string">'imaginary'</span>)
+    xlabel(<span class="string">'cycles per day'</span>)
+    ylabel(<span class="string">'log(imag(coefficient))'</span>)
+    grid <span class="string">on</span>
+    xlim([0, 5])
+</pre><pre class="codeoutput">Warning: Imaginary parts of complex X and/or Y arguments
+ignored 
+Warning: Imaginary parts of complex X and/or Y arguments
+ignored 
+</pre><img vspace="5" hspace="5" src="Ren_data1_week4_03.png" alt=""> <h2>amplitude of major peaks<a name="10"></a></h2><pre class="codeinput">amplitude = sqrt(rp.^2 +ip.^2)/N;      <span class="comment">%magnitude of coeff, normalize by n</span>
+amplitude(2:end-1) = 2*amplitude(2:end-1);  <span class="comment">%account for pos and neg freqs</span>
+
+meanofdata = amplitude(1);
+disp(<span class="string">'mean pressure: '</span>); disp(meanofdata);
+
+valdif = abs(frequencyaxis-1.929);
+ind1 = find(valdif == min(valdif));
+valdif = abs(frequencyaxis-1.008);
+ind2 = find(valdif == min(valdif));
+valdif = abs(frequencyaxis-0.9214);
+ind3 = find(valdif == min(valdif));
+
+ampm2 = amplitude(ind1)
+ampk1 = amplitude(ind2)
+ampo1 = amplitude(ind3)
+</pre><pre class="codeoutput">mean pressure: 
+    3.4861
+
+
+ampm2 =
+
+    0.5215
+
+
+ampk1 =
+
+    0.3591
+
+
+ampo1 =
+
+    0.1802
+
+</pre><h2>amplitude - spectral power<a name="11"></a></h2><pre class="codeinput">amp = abs(coeffi).^2;     <span class="comment">% square of magnitude of the coefficients=power</span>
+amp(2:end-1) = 2*amp(2:end-1); <span class="comment">% pos and neg frequencies (other than zero)</span>
+
+amp = amp/N;              <span class="comment">% normalize</span>
+
+figure
+loglog(frequencyaxis, amp)
+grid <span class="string">on</span>
+    xlabel(<span class="string">'Cycles Per Day'</span>)
+    ylabel(<span class="string">'db^{2}/cpd'</span>)
+</pre><img vspace="5" hspace="5" src="Ren_data1_week4_04.png" alt=""> <h2>derivative<a name="12"></a></h2><pre class="codeinput"><span class="comment">%   in fourier space the time derivative is equal to multiplying by the</span>
+<span class="comment">%   frequency</span>
+
+figure(<span class="string">'Name'</span>, <span class="string">'Power Spectrum, first derivative'</span>)
+loglog(frequencyaxis, amp.*frequencyaxis')
+grid <span class="string">on</span>
+    xlabel(<span class="string">'Cycles Per Day'</span>)
+    ylabel(<span class="string">'db^{2}/cpd'</span>)
+</pre><img vspace="5" hspace="5" src="Ren_data1_week4_05.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2015a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%%% Ren_data1_week4.m
+%
+%   Sea surface pressure, fitting with Fourier coefficients
+%
+%   A. Ren October 26, 2017
+
+%% load data
+load('../Week3/scrippspier_auto_p.mat')
+
+%% want evenly spaced data: use January 2015
+dataspacing = diff(SP_time_2015_mtlabtime);
+
+inde = find(dataspacing ~= duration(0, 6, 1), 1, 'first');
+disp('time increment non-uniform after: ');
+disp(SP_time_2015_mtlabtime(inde))
+
+sampledat_w = SP_press_2015(1:inde);
+sampletim_w = SP_time_2015_mtlabtime(1:inde);
+sampletel_w = sampletim_w - sampletim_w(1); %elapsed time since t0
+sampletel_w = days(sampletel_w);           %convert to days elapsed
+
+%% check for NaN
+sum(isnan(sampledat_w))
+
+%% fft
+coefficients = fft(sampledat_w);
+
+realpart = real(coefficients);
+imagpart = imag(coefficients);
+
+N = length(sampledat_w);
+scale = 1/361 *3600*24; % cycles per day
+
+frequencyaxis = scale* (0:N/2)/N; % even number of samples, N
+
+negfreq = -frequencyaxis(2:end);
+totfreq = [fliplr(negfreq) frequencyaxis(2:end)];
+
+%%
+figure('Name', 'Plotting Fourier Coefficients-full')
+subplot(2, 1, 1)
+    plot(totfreq, log(realpart))
+    title('real')
+    xlabel('cycles per day')
+    ylabel('log(real(coefficient))')
+    grid on
+subplot(2, 1, 2)
+    plot(totfreq, log(imagpart))
+    title('imaginary')
+    xlabel('cycles per day')
+    ylabel('log(imag(coefficient))')
+    grid on
+
+%% we only need the first N/2+1
+coeffi = coefficients(1:N/2+1);   % because N is even, choose until N/2+1
+
+rp = real(coeffi);
+ip = imag(coeffi);
+
+%%
+figure('Name', 'Plotting Fourier Coefficients')
+subplot(2, 1, 1)
+    plot(frequencyaxis, log(rp))
+    title('real')
+    xlabel('cycles per day')
+    ylabel('log(real(coefficient))')
+    grid on
+subplot(2, 1, 2)
+    plot(frequencyaxis, log(ip))
+    title('imaginary')
+    xlabel('cycles per day')
+    ylabel('log(imag(coefficient))')
+    grid on
+    
+%%
+figure('Name', 'Plotting Fourier Coefficients')
+subplot(2, 1, 1)
+    plot(frequencyaxis, log(rp))
+    title('real')
+    xlabel('cycles per day')
+    ylabel('log(real(coefficient))')
+    grid on
+    xlim([0, 5])
+subplot(2, 1, 2)
+    plot(frequencyaxis, log(ip))
+    title('imaginary')
+    xlabel('cycles per day')
+    ylabel('log(imag(coefficient))')
+    grid on
+    xlim([0, 5])
+
+%% amplitude of major peaks
+amplitude = sqrt(rp.^2 +ip.^2)/N;      %magnitude of coeff, normalize by n
+amplitude(2:end-1) = 2*amplitude(2:end-1);  %account for pos and neg freqs
+
+meanofdata = amplitude(1);
+disp('mean pressure: '); disp(meanofdata);
+
+valdif = abs(frequencyaxis-1.929);
+ind1 = find(valdif == min(valdif));
+valdif = abs(frequencyaxis-1.008);
+ind2 = find(valdif == min(valdif));
+valdif = abs(frequencyaxis-0.9214);
+ind3 = find(valdif == min(valdif));
+
+ampm2 = amplitude(ind1)
+ampk1 = amplitude(ind2)
+ampo1 = amplitude(ind3)
+
+%% amplitude - spectral power
+amp = abs(coeffi).^2;     % square of magnitude of the coefficients=power
+amp(2:end-1) = 2*amp(2:end-1); % pos and neg frequencies (other than zero)
+
+amp = amp/N;              % normalize
+
+figure
+loglog(frequencyaxis, amp)
+grid on
+    xlabel('Cycles Per Day')
+    ylabel('db^{2}/cpd')
+
+%% derivative
+
+%   in fourier space the time derivative is equal to multiplying by the
+%   frequency
+
+figure('Name', 'Power Spectrum, first derivative')
+loglog(frequencyaxis, amp.*frequencyaxis')
+grid on
+    xlabel('Cycles Per Day')
+    ylabel('db^{2}/cpd')
+
+##### SOURCE END #####
+--></body></html>

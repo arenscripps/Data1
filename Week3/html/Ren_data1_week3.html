@@ -1,0 +1,561 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Ren_data1_week3</title><meta name="generator" content="MATLAB 8.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2017-10-18"><meta name="DC.source" content="Ren_data1_week3.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1></h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Ren_data1_week3.m</a></li><li><a href="#2">load data</a></li><li><a href="#3">plot of raw data for 2015</a></li><li><a href="#4">plot of time between measurements and median</a></li><li><a href="#5">plot of time when data consistently same measurement frequency</a></li><li><a href="#6">fit tidal signals and fit mean</a></li><li><a href="#8">statistics</a></li><li><a href="#9">Pick time during summer</a></li><li><a href="#11">Chi Square and Evaluating Chi Square Misfit</a></li></ul></div><h2>Ren_data1_week3.m<a name="1"></a></h2><pre class="language-matlab">Sea <span class="string">surface</span> <span class="string">pressure</span>, fitting <span class="string">to</span> <span class="string">sines</span> <span class="string">and</span> <span class="string">cosines</span> <span class="string">(least square fit)</span>
+</pre><pre class="language-matlab">A. Ren October <span class="string">19</span>, 2017
+</pre><pre class="codeinput"><span class="comment">%   Automatic Scripps Pier data from thredds server:</span>
+<span class="comment">% yearof = 2015;</span>
+<span class="comment">% fileloca = sprintf('http://sccoos.org/thredds/dodsC/autoss/scripps_pier-%04d.nc', yearof);</span>
+<span class="comment">% ncdisp(fileloca)</span>
+<span class="comment">%</span>
+<span class="comment">% SP_press_2015 = ncread(fileloca, 'pressure');</span>
+<span class="comment">% SP_time_2015 = ncread(fileloca, 'time');</span>
+<span class="comment">% SP_depth_2015 = ncread(fileloca, 'depth');</span>
+<span class="comment">%</span>
+<span class="comment">% %there is an outlier from visual inspection</span>
+<span class="comment">% % remove</span>
+<span class="comment">% % badvalue = find(SP_temp_2015 &gt; 30);</span>
+<span class="comment">% % SP_temp_2015(badvalue) = NaN;</span>
+<span class="comment">% % SP_time_2015(badvalue) = NaN;</span>
+<span class="comment">% % SP_depth_2015(badvalue) = NaN;</span>
+<span class="comment">%</span>
+<span class="comment">% SP_press_2015 = double(SP_press_2015);</span>
+<span class="comment">% SP_time_2015 = double(SP_time_2015);</span>
+<span class="comment">% SP_depth_2015 = double(SP_depth_2015);</span>
+<span class="comment">%</span>
+<span class="comment">% SP_time_2015_mtlabtime = datetime(SP_time_2015, 'ConvertFrom', ...</span>
+<span class="comment">%     'posixtime', 'TimeZone', 'America/Los_Angeles');</span>
+<span class="comment">%</span>
+<span class="comment">% save('scrippspier_auto_p.mat', 'SP_press_2015', 'SP_time_2015', ...</span>
+<span class="comment">%     'SP_depth_2015', 'SP_time_2015_mtlabtime')</span>
+</pre><h2>load data<a name="2"></a></h2><pre class="codeinput">load(<span class="string">'scrippspier_auto_p.mat'</span>)
+</pre><h2>plot of raw data for 2015<a name="3"></a></h2><pre class="codeinput">figure(<span class="string">'Name'</span>, <span class="string">'Full 2015 Pressure Time Series'</span>)
+    plot(SP_time_2015_mtlabtime, SP_press_2015)
+    xlabel(<span class="string">'Time'</span>)
+    ylabel(<span class="string">'Pressure (db)'</span>)
+    grid <span class="string">on</span>
+</pre><img vspace="5" hspace="5" src="Ren_data1_week3_01.png" alt=""> <h2>plot of time between measurements and median<a name="4"></a></h2><pre class="codeinput">dataspacing = diff(SP_time_2015_mtlabtime);
+
+figure(<span class="string">'Name'</span>, <span class="string">'Time Increment Between Measurements'</span>)
+    plot(SP_time_2015_mtlabtime(2:end), minutes(dataspacing))
+    xlabel(<span class="string">'Time'</span>)
+    ylabel(<span class="string">'Time since last measurement (minutes)'</span>)
+    ylim([0 15])
+
+medianincr = median(dataspacing);
+disp(<span class="string">'median time between measurements: '</span>); disp(medianincr);
+</pre><pre class="codeoutput">median time between measurements: 
+   00:06:01
+
+</pre><img vspace="5" hspace="5" src="Ren_data1_week3_02.png" alt=""> <h2>plot of time when data consistently same measurement frequency<a name="5"></a></h2><pre class="codeinput">inde = find(dataspacing ~= duration(0, 6, 1), 1, <span class="string">'first'</span>);
+disp(<span class="string">'time increment non-uniform after: '</span>);
+disp(SP_time_2015_mtlabtime(inde))
+
+disp(<span class="string">'record starts: '</span>)
+disp(SP_time_2015_mtlabtime(1))
+
+figure(<span class="string">'Name'</span>, <span class="string">'Data for month of January 2015'</span>)
+    plot(SP_time_2015_mtlabtime(1:inde), SP_press_2015(1:inde))
+    grid <span class="string">on</span>
+    xlabel(<span class="string">'Time'</span>)
+    ylabel(<span class="string">'Pressure (db)'</span>)
+</pre><pre class="codeoutput">time increment non-uniform after: 
+   04-Feb-2015 09:24:36
+
+record starts: 
+   31-Dec-2014 16:00:05
+
+</pre><img vspace="5" hspace="5" src="Ren_data1_week3_03.png" alt=""> <h2>fit tidal signals and fit mean<a name="6"></a></h2><pre class="codeinput">sampledat_w = SP_press_2015(1:inde);
+sampletim_w = SP_time_2015_mtlabtime(1:inde);
+sampletel_w = sampletim_w - sampletim_w(1); <span class="comment">%elapsed time since t0</span>
+sampletel_w = hours(sampletel_w);           <span class="comment">%convert to hours elapsed</span>
+T_O1 = 25.82;                           <span class="comment">%period in hours</span>
+T_K1 = 23.93;                           <span class="comment">%period in hours</span>
+T_M2 = 12.42;                           <span class="comment">%period in hours</span>
+
+
+col1 = repmat([1], length(sampledat_w), 1);
+col2 = sampletel_w;
+col3 = sin( (2*pi./T_O1) * col2 );
+col4 = cos( (2*pi./T_O1) * col2 );
+col5 = sin( (2*pi./T_K1) * col2 );
+col6 = cos( (2*pi./T_K1) * col2 );
+col7 = sin( (2*pi./T_M2) * col2 );
+col8 = cos( (2*pi./T_M2) * col2 );
+
+A = [col1 col2 col3 col4 col5 col6 col7 col8];
+
+x = (A'*A)^(-1) *A' *sampledat_w;
+</pre><pre class="codeinput">figure(<span class="string">'Name'</span>, <span class="string">'Compare three tidal component fit and data from Jan 2015'</span>)
+yfit3 = A*x;
+plot(sampletel_w, yfit3, <span class="string">'LineWidth'</span>, 1.5)
+hold <span class="string">on</span>
+plot(sampletel_w, sampledat_w, <span class="string">'LineWidth'</span>, 1.2);
+legend(<span class="string">'fit'</span>, <span class="string">'data'</span>)
+xlabel(<span class="string">'Time since t_0 (hours)'</span>)
+ylabel(<span class="string">'Pressure (db)'</span>)
+hold <span class="string">off</span>
+</pre><img vspace="5" hspace="5" src="Ren_data1_week3_04.png" alt=""> <h2>statistics<a name="8"></a></h2><pre class="codeinput">y3fit_mean = mean(sampledat_w);
+disp(<span class="string">'mean = '</span>); disp(y3fit_mean)
+disp(<span class="string">'mean from least squares: '</span>); disp(x(1))
+
+<span class="comment">%   Note: because I fit a time varying function as well, the coefficient</span>
+<span class="comment">%   x(1) does not represent a fit to the mean.  Thus, the mean of the</span>
+<span class="comment">%   values is the mean fitted function.</span>
+
+Amp_O1 = sqrt( (x(3))^2 + (x(4))^2);    disp(<span class="string">'O1'</span>); disp(Amp_O1);
+Amp_K1 = sqrt( (x(5))^2 + (x(6))^2);    disp(<span class="string">'K1'</span>); disp(Amp_K1);
+Amp_M2 = sqrt( (x(7))^2 + (x(8))^2);    disp(<span class="string">'M2'</span>); disp(Amp_M2);
+</pre><pre class="codeoutput">mean = 
+   3.486089027722485
+
+mean from least squares: 
+   3.514317061297172
+
+O1
+   0.168622638355643
+
+K1
+   0.371472588149105
+
+M2
+   0.527373768555816
+
+</pre><h2>Pick time during summer<a name="9"></a></h2><pre class="language-matlab">mid <span class="string">june</span> <span class="string">to</span> <span class="string">mid</span> <span class="string">july</span>
+Here <span class="string">I</span> <span class="string">will</span> <span class="string">fit</span> <span class="string">the</span> <span class="string">mean</span> <span class="string">and</span> <span class="string">three</span> <span class="string">tidal</span> <span class="string">frequencies</span> <span class="string">only.</span>
+</pre><pre class="codeinput">i1 = find(SP_time_2015_mtlabtime &gt; datetime([2015 6 15], <span class="string">'TimeZone'</span>, <span class="keyword">...</span>
+    <span class="string">'America/Los_Angeles'</span>), 1, <span class="string">'first'</span>);
+i2 = find(SP_time_2015_mtlabtime &gt; datetime([2015 7 15], <span class="string">'TimeZone'</span>, <span class="keyword">...</span>
+    <span class="string">'America/Los_Angeles'</span>), 1, <span class="string">'first'</span>);
+
+figure(<span class="string">'Name'</span>, <span class="string">'Summer Dataspacing'</span>)
+plot(dataspacing(i1:i2))
+
+sampledat_w = SP_press_2015(i1:i2);
+sampletim_w = SP_time_2015_mtlabtime(i1:i2);
+sampletel_w = sampletim_w - sampletim_w(1); <span class="comment">%elapsed time since t0</span>
+sampletel_w = hours(sampletel_w);           <span class="comment">%convert to hours elapsed</span>
+
+col1 = repmat([1], length(sampledat_w), 1);
+col2 = sampletel_w;
+col3 = sin( (2*pi./T_O1) * col2 );
+col4 = cos( (2*pi./T_O1) * col2 );
+col5 = sin( (2*pi./T_K1) * col2 );
+col6 = cos( (2*pi./T_K1) * col2 );
+col7 = sin( (2*pi./T_M2) * col2 );
+col8 = cos( (2*pi./T_M2) * col2 );
+
+B = [col1 col3 col4 col5 col6 col7 col8];
+
+x_s = (B'*B)^(-1) *B' *sampledat_w;
+
+Amp_O1_s = sqrt( (x_s(2))^2 + (x_s(3))^2);    disp(<span class="string">'O1'</span>); disp(Amp_O1_s);
+Amp_K1_s = sqrt( (x_s(4))^2 + (x_s(5))^2);    disp(<span class="string">'K1'</span>); disp(Amp_K1_s);
+Amp_M2_s = sqrt( (x_s(6))^2 + (x_s(7))^2);    disp(<span class="string">'M2'</span>); disp(Amp_M2_s);
+
+O1diff = Amp_O1 - Amp_O1_s
+K1diff = Amp_K1 - Amp_K1_s
+M2diff = Amp_M2 - Amp_M2_s
+</pre><pre class="codeoutput">O1
+   0.169919717158543
+
+K1
+   0.379903027179325
+
+M2
+   0.525844439177677
+
+
+O1diff =
+
+  -0.001297078802900
+
+
+K1diff =
+
+  -0.008430439030220
+
+
+M2diff =
+
+   0.001529329378139
+
+</pre><img vspace="5" hspace="5" src="Ren_data1_week3_05.png" alt=""> <pre class="codeinput">figure(<span class="string">'Name'</span>, <span class="string">'Compare three tidal component fit and data from Jun 2015'</span>)
+yfit3_s = B*x_s;
+plot(sampletel_w, yfit3_s, <span class="string">'LineWidth'</span>, 1.5)
+hold <span class="string">on</span>
+plot(sampletel_w, sampledat_w, <span class="string">'LineWidth'</span>, 1.2);
+legend(<span class="string">'fit'</span>, <span class="string">'data'</span>)
+xlabel(<span class="string">'Time since t_0 (hours)'</span>)
+ylabel(<span class="string">'Pressure (db)'</span>)
+</pre><img vspace="5" hspace="5" src="Ren_data1_week3_06.png" alt=""> <h2>Chi Square and Evaluating Chi Square Misfit<a name="11"></a></h2><pre class="codeinput">sampledat_w = SP_press_2015(1:inde);
+sampletim_w = SP_time_2015_mtlabtime(1:inde);
+sampletel_w = sampletim_w - sampletim_w(1); <span class="comment">%elapsed time since t0</span>
+sampletel_w = hours(sampletel_w);           <span class="comment">%convert to hours elapsed</span>
+
+
+<span class="comment">% individual pressure reading's variance</span>
+<span class="comment">%</span>
+<span class="comment">%   since the pressure is read every 6 minutes, there should be periods of</span>
+<span class="comment">%   time when the tide is approximately one value.  If I average over that</span>
+<span class="comment">%   time, I can get an estimate of the variance of the measurement of one</span>
+<span class="comment">%   value.  I pick the first high high tide from the January 2015 data,</span>
+<span class="comment">%   where the pressure measured is around 4.45 db. I averaged over 1 hour</span>
+<span class="comment">%   which is 10 sample points</span>
+
+ind1 = find(sampledat_w &gt; 4.45, 1 , <span class="string">'first'</span>);
+numberplus = 9;
+
+sigma = std(sampledat_w(ind1:ind1+numberplus));
+<span class="comment">%sigma = 0.09;</span>
+
+chi_square = sum( <span class="keyword">...</span>
+    ((sampledat_w - A*x).^2 ) /<span class="keyword">...</span>
+            sigma^2 <span class="keyword">...</span>
+                )
+
+gammainc(chi_square*0.5, (size(A, 1) - size(A, 2) +1)*0.5)
+
+<span class="comment">% fit 5</span>
+S2 = 12;
+N2 = 12.66;
+
+
+col1 = repmat([1], length(sampledat_w), 1);
+col2 = sampletel_w;
+col3 = sin( (2*pi./T_O1) * col2 );
+col4 = cos( (2*pi./T_O1) * col2 );
+col5 = sin( (2*pi./T_K1) * col2 );
+col6 = cos( (2*pi./T_K1) * col2 );
+col7 = sin( (2*pi./T_M2) * col2 );
+col8 = cos( (2*pi./T_M2) * col2 );
+col9 = sin( (2*pi./S2) * col2 );
+col10 = cos( (2*pi./S2) * col2 );
+col11 = sin( (2*pi./N2) * col2 );
+col12 = cos( (2*pi./N2) * col2 );
+
+A2 = [col1 col3 col4 col5 col6 col7 col8 col9 col10 col11 col12];
+
+x2 = (A2'*A2)^(-1) *A2' *sampledat_w;
+
+chi_square = sum( <span class="keyword">...</span>
+    ((sampledat_w - A2*x2).^2 ) /<span class="keyword">...</span>
+            sigma^2 <span class="keyword">...</span>
+                )
+
+gammainc(chi_square*0.5, (size(A2, 1) - size(A2, 2))*0.5)
+</pre><pre class="codeoutput">
+chi_square =
+
+     3.614646204926934e+05
+
+
+ans =
+
+     1
+
+
+chi_square =
+
+     6.605280483969307e+04
+
+
+ans =
+
+     1
+
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2015a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%%% Ren_data1_week3.m
+%
+%   Sea surface pressure, fitting to sines and cosines (least square fit)
+%
+%   A. Ren October 19, 2017
+
+%   Automatic Scripps Pier data from thredds server:
+% yearof = 2015;
+% fileloca = sprintf('http://sccoos.org/thredds/dodsC/autoss/scripps_pier-%04d.nc', yearof);
+% ncdisp(fileloca)
+% 
+% SP_press_2015 = ncread(fileloca, 'pressure');
+% SP_time_2015 = ncread(fileloca, 'time');
+% SP_depth_2015 = ncread(fileloca, 'depth');
+%        
+% %there is an outlier from visual inspection
+% % remove
+% % badvalue = find(SP_temp_2015 > 30);
+% % SP_temp_2015(badvalue) = NaN;
+% % SP_time_2015(badvalue) = NaN;
+% % SP_depth_2015(badvalue) = NaN;
+% 
+% SP_press_2015 = double(SP_press_2015);
+% SP_time_2015 = double(SP_time_2015);
+% SP_depth_2015 = double(SP_depth_2015);
+% 
+% SP_time_2015_mtlabtime = datetime(SP_time_2015, 'ConvertFrom', ...
+%     'posixtime', 'TimeZone', 'America/Los_Angeles');
+% 
+% save('scrippspier_auto_p.mat', 'SP_press_2015', 'SP_time_2015', ...
+%     'SP_depth_2015', 'SP_time_2015_mtlabtime')
+
+%% load data
+load('scrippspier_auto_p.mat')
+
+%% plot of raw data for 2015
+figure('Name', 'Full 2015 Pressure Time Series')
+    plot(SP_time_2015_mtlabtime, SP_press_2015)
+    xlabel('Time')
+    ylabel('Pressure (db)')
+    grid on
+
+%% plot of time between measurements and median
+dataspacing = diff(SP_time_2015_mtlabtime);
+
+figure('Name', 'Time Increment Between Measurements')
+    plot(SP_time_2015_mtlabtime(2:end), minutes(dataspacing))
+    xlabel('Time')
+    ylabel('Time since last measurement (minutes)')
+    ylim([0 15])
+
+medianincr = median(dataspacing);
+disp('median time between measurements: '); disp(medianincr);
+
+%% plot of time when data consistently same measurement frequency
+
+inde = find(dataspacing ~= duration(0, 6, 1), 1, 'first');
+disp('time increment non-uniform after: ');
+disp(SP_time_2015_mtlabtime(inde))
+
+disp('record starts: ')
+disp(SP_time_2015_mtlabtime(1))
+
+figure('Name', 'Data for month of January 2015')
+    plot(SP_time_2015_mtlabtime(1:inde), SP_press_2015(1:inde))
+    grid on
+    xlabel('Time')
+    ylabel('Pressure (db)')
+    
+%% fit tidal signals and fit mean
+
+sampledat_w = SP_press_2015(1:inde);
+sampletim_w = SP_time_2015_mtlabtime(1:inde);
+sampletel_w = sampletim_w - sampletim_w(1); %elapsed time since t0
+sampletel_w = hours(sampletel_w);           %convert to hours elapsed
+T_O1 = 25.82;                           %period in hours
+T_K1 = 23.93;                           %period in hours
+T_M2 = 12.42;                           %period in hours
+
+
+col1 = repmat([1], length(sampledat_w), 1);
+col2 = sampletel_w;
+col3 = sin( (2*pi./T_O1) * col2 );
+col4 = cos( (2*pi./T_O1) * col2 );
+col5 = sin( (2*pi./T_K1) * col2 );
+col6 = cos( (2*pi./T_K1) * col2 );
+col7 = sin( (2*pi./T_M2) * col2 );
+col8 = cos( (2*pi./T_M2) * col2 );
+
+A = [col1 col2 col3 col4 col5 col6 col7 col8];
+
+x = (A'*A)^(-1) *A' *sampledat_w;
+
+%%
+figure('Name', 'Compare three tidal component fit and data from Jan 2015')
+yfit3 = A*x;
+plot(sampletel_w, yfit3, 'LineWidth', 1.5)
+hold on
+plot(sampletel_w, sampledat_w, 'LineWidth', 1.2);
+legend('fit', 'data')
+xlabel('Time since t_0 (hours)')
+ylabel('Pressure (db)')
+hold off
+
+%%   statistics
+y3fit_mean = mean(sampledat_w);
+disp('mean = '); disp(y3fit_mean)
+disp('mean from least squares: '); disp(x(1))
+
+%   Note: because I fit a time varying function as well, the coefficient
+%   x(1) does not represent a fit to the mean.  Thus, the mean of the
+%   values is the mean fitted function.
+
+Amp_O1 = sqrt( (x(3))^2 + (x(4))^2);    disp('O1'); disp(Amp_O1);
+Amp_K1 = sqrt( (x(5))^2 + (x(6))^2);    disp('K1'); disp(Amp_K1);
+Amp_M2 = sqrt( (x(7))^2 + (x(8))^2);    disp('M2'); disp(Amp_M2);
+
+%% Pick time during summer
+%   mid june to mid july
+%   Here I will fit the mean and three tidal frequencies only.
+
+i1 = find(SP_time_2015_mtlabtime > datetime([2015 6 15], 'TimeZone', ...
+    'America/Los_Angeles'), 1, 'first');
+i2 = find(SP_time_2015_mtlabtime > datetime([2015 7 15], 'TimeZone', ...
+    'America/Los_Angeles'), 1, 'first');
+
+figure('Name', 'Summer Dataspacing')
+plot(dataspacing(i1:i2))
+
+sampledat_w = SP_press_2015(i1:i2);
+sampletim_w = SP_time_2015_mtlabtime(i1:i2);
+sampletel_w = sampletim_w - sampletim_w(1); %elapsed time since t0
+sampletel_w = hours(sampletel_w);           %convert to hours elapsed
+
+col1 = repmat([1], length(sampledat_w), 1);
+col2 = sampletel_w;
+col3 = sin( (2*pi./T_O1) * col2 );
+col4 = cos( (2*pi./T_O1) * col2 );
+col5 = sin( (2*pi./T_K1) * col2 );
+col6 = cos( (2*pi./T_K1) * col2 );
+col7 = sin( (2*pi./T_M2) * col2 );
+col8 = cos( (2*pi./T_M2) * col2 );
+
+B = [col1 col3 col4 col5 col6 col7 col8];
+
+x_s = (B'*B)^(-1) *B' *sampledat_w;
+
+Amp_O1_s = sqrt( (x_s(2))^2 + (x_s(3))^2);    disp('O1'); disp(Amp_O1_s);
+Amp_K1_s = sqrt( (x_s(4))^2 + (x_s(5))^2);    disp('K1'); disp(Amp_K1_s);
+Amp_M2_s = sqrt( (x_s(6))^2 + (x_s(7))^2);    disp('M2'); disp(Amp_M2_s);
+
+O1diff = Amp_O1 - Amp_O1_s
+K1diff = Amp_K1 - Amp_K1_s
+M2diff = Amp_M2 - Amp_M2_s
+%%
+figure('Name', 'Compare three tidal component fit and data from Jun 2015')
+yfit3_s = B*x_s;
+plot(sampletel_w, yfit3_s, 'LineWidth', 1.5)
+hold on
+plot(sampletel_w, sampledat_w, 'LineWidth', 1.2);
+legend('fit', 'data')
+xlabel('Time since t_0 (hours)')
+ylabel('Pressure (db)')
+
+%% Chi Square and Evaluating Chi Square Misfit
+
+sampledat_w = SP_press_2015(1:inde);
+sampletim_w = SP_time_2015_mtlabtime(1:inde);
+sampletel_w = sampletim_w - sampletim_w(1); %elapsed time since t0
+sampletel_w = hours(sampletel_w);           %convert to hours elapsed
+
+
+% individual pressure reading's variance
+%
+%   since the pressure is read every 6 minutes, there should be periods of
+%   time when the tide is approximately one value.  If I average over that
+%   time, I can get an estimate of the variance of the measurement of one
+%   value.  I pick the first high high tide from the January 2015 data,
+%   where the pressure measured is around 4.45 db. I averaged over 1 hour
+%   which is 10 sample points
+
+ind1 = find(sampledat_w > 4.45, 1 , 'first');
+numberplus = 9;
+
+sigma = std(sampledat_w(ind1:ind1+numberplus));
+%sigma = 0.09;
+
+chi_square = sum( ...
+    ((sampledat_w - A*x).^2 ) /...
+            sigma^2 ...
+                )
+            
+gammainc(chi_square*0.5, (size(A, 1) - size(A, 2) +1)*0.5)
+
+% fit 5
+S2 = 12;
+N2 = 12.66;
+
+
+col1 = repmat([1], length(sampledat_w), 1);
+col2 = sampletel_w;
+col3 = sin( (2*pi./T_O1) * col2 );
+col4 = cos( (2*pi./T_O1) * col2 );
+col5 = sin( (2*pi./T_K1) * col2 );
+col6 = cos( (2*pi./T_K1) * col2 );
+col7 = sin( (2*pi./T_M2) * col2 );
+col8 = cos( (2*pi./T_M2) * col2 );
+col9 = sin( (2*pi./S2) * col2 );
+col10 = cos( (2*pi./S2) * col2 );
+col11 = sin( (2*pi./N2) * col2 );
+col12 = cos( (2*pi./N2) * col2 );
+
+A2 = [col1 col3 col4 col5 col6 col7 col8 col9 col10 col11 col12];
+
+x2 = (A2'*A2)^(-1) *A2' *sampledat_w;
+
+chi_square = sum( ...
+    ((sampledat_w - A2*x2).^2 ) /...
+            sigma^2 ...
+                )
+            
+gammainc(chi_square*0.5, (size(A2, 1) - size(A2, 2))*0.5)
+
+
+            
+            
+##### SOURCE END #####
+--></body></html>

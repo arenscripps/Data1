@@ -1,0 +1,610 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Ren_data1_week7</title><meta name="generator" content="MATLAB 8.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2017-11-20"><meta name="DC.source" content="Ren_data1_week7.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1></h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Ren_data1_week7.m</a></li><li><a href="#2">load file</a></li><li><a href="#3">edit/add time variables</a></li><li><a href="#4">Plot time series of air temp and sst from file</a></li><li><a href="#5">check spikes</a></li><li><a href="#6">error checking</a></li><li><a href="#7">Fourier Transform - first try without segmenting</a></li><li><a href="#8">Fourier Transform - with segments</a></li><li><a href="#9">calculate spectra</a></li><li><a href="#10">error bar</a></li><li><a href="#11">plots with errorbar</a></li><li><a href="#12">verify Parseval's theorem</a></li><li><a href="#13">variance preserving spectra</a></li></ul></div><h2>Ren_data1_week7.m<a name="1"></a></h2><pre class="language-matlab">midterm
+</pre><pre class="language-matlab">data <span class="string">from</span> <span class="string">Stratus</span> <span class="string">mooring</span> <span class="string">program</span>
+</pre><pre class="language-matlab">A. Ren, November <span class="string">21</span>, 2017
+</pre><h2>load file<a name="2"></a></h2><pre class="codeinput">filename = <span class="string">'./OS_Stratus_2015_D_M.nc'</span>;
+<span class="comment">%ncdisp(filename)</span>
+
+seawaterdata = ncread(filename, <span class="string">'TEMP'</span>);
+airtempdata = ncread(filename, <span class="string">'AIRT'</span>);
+timedata = ncread(filename, <span class="string">'TIME'</span>);
+heightair = ncread(filename, <span class="string">'HEIGHT_RHAT'</span>);
+heightsea = ncread(filename, <span class="string">'DEPTH'</span>);
+</pre><h2>edit/add time variables<a name="3"></a></h2><pre class="codeinput">baseday = datenum(1950, 1, 1);
+multby = baseday * ones(size(timedata, 1), size(timedata, 2));
+timemtlb = multby + timedata;
+timemtlb_dt = datetime(timemtlb, <span class="string">'ConvertFrom'</span>, <span class="string">'datenum'</span>);
+</pre><h2>Plot time series of air temp and sst from file<a name="4"></a></h2><pre class="codeinput">figure(<span class="string">'Name'</span>, <span class="string">'TimeSeries Plots'</span>)
+subplot(2, 1, 1)
+    scatter(timemtlb, airtempdata, 1, <span class="string">'filled'</span>)
+    title(<span class="string">'Air Temperature'</span>)
+    grid <span class="string">on</span>
+    datetick(<span class="string">'x'</span>, 3)
+    xlabel(<span class="string">'Time'</span>)
+    ylabel(<span class="string">'Temperature (^{\circ}C)'</span>)
+    ylim([15 26])
+    xlim([datenum(2015, 3, 1) datenum(2016, 8, 1)])
+subplot(2, 1, 2)
+    scatter(timemtlb, seawaterdata, 1, <span class="string">'filled'</span>)
+    title(<span class="string">'Sea Temperature'</span>)
+    datetick(<span class="string">'x'</span>, 3)
+    grid <span class="string">on</span>
+    datetick(<span class="string">'x'</span>, 3)
+    xlabel(<span class="string">'Time'</span>)
+    ylabel(<span class="string">'Temperature (^{\circ}C)'</span>)
+    ylim([15 26])
+    xlim([datenum(2015, 3, 1) datenum(2016, 8, 1)])
+</pre><img vspace="5" hspace="5" src="Ren_data1_week7_01.png" alt=""> <h2>check spikes<a name="5"></a></h2><pre class="codeinput">figure(<span class="string">'Name'</span>, <span class="string">'Sea'</span>)
+    scatter(timemtlb, seawaterdata, 1, <span class="string">'filled'</span>)
+    title(<span class="string">'Sea Temperature'</span>)
+    datetick(<span class="string">'x'</span>, 3)
+    grid <span class="string">on</span>
+    datetick(<span class="string">'x'</span>, 3)
+    xlabel(<span class="string">'Time'</span>)
+    ylabel(<span class="string">'Temperature (^{\circ}C)'</span>)
+    xlim([datenum(2015, 3, 1) datenum(2016, 8, 1)])
+</pre><img vspace="5" hspace="5" src="Ren_data1_week7_02.png" alt=""> <h2>error checking<a name="6"></a></h2><pre class="codeinput">sum(isnan(airtempdata))  <span class="comment">%% zero</span>
+sum(isnan(seawaterdata)) <span class="comment">%% zero</span>
+chd = diff(timemtlb);
+estd = floor(chd*10000);  <span class="comment">%% matlab diff created slight differences in vals</span>
+
+figure(<span class="string">'Name'</span>, <span class="string">'Gap between time increments - scaled'</span>)
+    scatter(timemtlb(2:end), estd)
+    grid <span class="string">on</span>
+
+<span class="comment">%   we're going to take data "as is" for now</span>
+</pre><pre class="codeoutput">
+ans =
+
+     0
+
+
+ans =
+
+     0
+
+</pre><img vspace="5" hspace="5" src="Ren_data1_week7_03.png" alt=""> <h2>Fourier Transform - first try without segmenting<a name="7"></a></h2><pre class="codeinput"><span class="comment">% demean</span>
+air_dm = airtempdata - mean(airtempdata);
+sea_dm = seawaterdata - mean(seawaterdata);
+
+<span class="comment">% no trend (?); assume no trend</span>
+
+<span class="comment">% try basic spectra, no segmenting first</span>
+A_air = fft(air_dm);
+N = length(A_air);
+amp_A_air = abs(A_air( 1:(N+1)/2 ) ).^2;  <span class="comment">%odd N</span>
+amp_A_air(2:end) = 2*amp_A_air(2:end);
+alpha = 6.9444e-04; <span class="comment">%days %period/N = deltaT in units you want</span>
+amp_A_air = amp_A_air* alpha/N ;
+
+<span class="comment">%  x-axis</span>
+scale = 1/60 *3600*24; <span class="comment">% 1 measurement / 60 seconds * ()= cycles per day</span>
+frequencyaxis = scale*(0:(N/2))/N; <span class="comment">% odd number of samples, N</span>
+<span class="comment">%  the notes are wrong</span>
+<span class="comment">%  notes say (0:N/2-1)</span>
+<span class="comment">%  should say(0: [(N+1)/2]-1 ) which is equivalent to 0:N/2 for an odd</span>
+<span class="comment">%  number of samples since matlab increments by one and won't pick up the</span>
+<span class="comment">%  last "half" digit.</span>
+
+figure(<span class="string">'Name'</span>, <span class="string">'Full Air Temperature'</span>)
+    loglog(frequencyaxis, amp_A_air)
+    grid <span class="string">on</span>
+    title(<span class="string">'air temperature'</span>)
+    ylabel(<span class="string">'[^{\circ}C]^{2} / cpd'</span>)
+    xlabel(<span class="string">'cycles per day'</span>)
+
+A_sea = fft(sea_dm);
+N = length(A_sea);
+amp_A_sea = abs(A_sea( 1:(N+1)/2 ) ).^2;
+amp_A_sea(2:end) = 2*amp_A_sea(2:end);
+amp_A_sea = amp_A_sea* alpha/N;
+
+figure(<span class="string">'Name'</span>, <span class="string">'Full SST'</span>)
+    loglog(frequencyaxis, amp_A_sea)
+    grid <span class="string">on</span>
+    title(<span class="string">'sea surface temperature'</span>)
+    ylabel(<span class="string">'[^{\circ}C]^{2} / cpd'</span>)
+    xlabel(<span class="string">'cycles per day'</span>)
+</pre><img vspace="5" hspace="5" src="Ren_data1_week7_04.png" alt=""> <img vspace="5" hspace="5" src="Ren_data1_week7_05.png" alt=""> <h2>Fourier Transform - with segments<a name="8"></a></h2><pre class="codeinput">airtemp = airtempdata(1:end-1);
+    nosegs = 9;
+    dataperseg = length(airtemp)/nosegs;
+airtemp = reshape(airtemp, [dataperseg, nosegs]);
+
+seatemp = seawaterdata(1:end-1);
+seatemp = reshape(seatemp, [dataperseg, nosegs]);
+
+<span class="comment">% 50 % overlapping segments</span>
+startinc = dataperseg/2;
+indexlist = startinc+1:dataperseg:length(airtempdata)-dataperseg;
+
+<span class="keyword">for</span> i = 1:length(indexlist)
+    overlapseg(:, i) = airtemp(indexlist(i):indexlist(i)+dataperseg-1)';
+<span class="keyword">end</span>
+airtemp = [airtemp overlapseg];
+
+<span class="keyword">for</span> i = 1:length(indexlist)
+    overlapseg(:, i) = seatemp(indexlist(i):indexlist(i)+dataperseg-1)';
+<span class="keyword">end</span>
+seatemp = [seatemp overlapseg];
+
+<span class="comment">% detrend (demean)</span>
+seatemp = detrend(seatemp);
+airtemp = detrend(airtemp);
+
+<span class="comment">% Hanning window</span>
+airtemp_f = airtemp.* (hann(dataperseg)*ones(1, size(airtemp, 2)));
+seatemp_f = seatemp.* (hann(dataperseg)*ones(1, size(seatemp, 2)));
+
+<span class="comment">% fft</span>
+A_airtemp_f = fft(airtemp_f);
+A_seatemp_f = fft(seatemp_f);
+
+<span class="comment">% add back energy lost by applying Hanning Window (sqrt(8/3))</span>
+constantHanning = sqrt(8/3);
+A_airtemp_f = A_airtemp_f * constantHanning;
+A_seatemp_f = A_seatemp_f * constantHanning;
+</pre><h2>calculate spectra<a name="9"></a></h2><pre class="codeinput">NN = dataperseg;
+
+amp_airtemp_f = abs(A_airtemp_f(1:(NN/2) + 1, :)).^2 ;  <span class="comment">% even N</span>
+amp_airtemp_f(2:end-1, :) = 2*amp_airtemp_f(2:end-1, :); <span class="comment">% mult by 2</span>
+alpha = 6.9444e-04; <span class="comment">%days %period/N = deltaT in units you want</span>
+amp_airtemp_f = amp_airtemp_f * alpha/NN;              <span class="comment">% normalize</span>
+
+amp_seatemp_f = abs(A_seatemp_f(1:(NN/2) +1, :)).^2 ;   <span class="comment">% even N</span>
+amp_seatemp_f(2:end-1, :) = 2*amp_seatemp_f(2:end-1, :); <span class="comment">% mult by 2</span>
+amp_seatemp_f = amp_seatemp_f * alpha/NN;              <span class="comment">% normalize</span>
+
+<span class="comment">% average over segments</span>
+amp_airtemp_f_m = mean(amp_airtemp_f, 2);
+amp_seatemp_f_m = mean(amp_seatemp_f, 2);
+
+<span class="comment">% xaxis</span>
+<span class="comment">% scale from above; 1 measurement / 60 seconds * ()= cycles per day</span>
+frequency_filt = scale* (0:NN/2)/NN;
+</pre><h2>error bar<a name="10"></a></h2><pre>assume degrees of freedom is the number of segments and overlapping
+segments used; 9 + 8 = 17.  This is also size(airtemp, 2).</pre><pre class="codeinput">totalindepseg = 17;
+dof = 2*totalindepseg;
+
+err_high = dof/chi2inv(0.05/2, dof);
+err_low = dof/chi2inv(1-0.05/2, dof);
+</pre><h2>plots with errorbar<a name="11"></a></h2><pre class="codeinput">figure(<span class="string">'Name'</span>, <span class="string">'Sea Temperature - segmented w/errorbar'</span>)
+    loglog(frequency_filt, amp_seatemp_f_m)
+    hold <span class="string">on</span>
+    loglog([frequency_filt(end) frequency_filt(end)], <span class="keyword">...</span>
+            ([err_low err_high]*amp_seatemp_f_m(end) * 1000), <span class="string">'k'</span>, <span class="string">'LineWidth'</span>, 1.8)
+    grid <span class="string">on</span>
+    ylim([1e-8 1e2])
+    ylabel(<span class="string">'[^{\circ}C]^{2} / cpd'</span>)
+    xlabel(<span class="string">'cycles per day'</span>)
+    title(<span class="string">'sea temperature - segmented, hanning window'</span>)
+
+figure(<span class="string">'Name'</span>, <span class="string">'Air Temperature - segmented w/ errorbar'</span>)
+    loglog(frequency_filt, amp_airtemp_f_m)
+    hold <span class="string">on</span>
+    loglog([frequency_filt(end) frequency_filt(end)], <span class="keyword">...</span>
+            ([err_low err_high]*amp_airtemp_f_m(end) * 1000), <span class="string">'k'</span>, <span class="string">'LineWidth'</span>, 1.8)
+    grid <span class="string">on</span>
+    ylabel(<span class="string">'[^{\circ}C]^{2} / cpd'</span>)
+    xlabel(<span class="string">'cycles per day'</span>)
+    title(<span class="string">'air temperature - segmented, hanning window'</span>)
+</pre><img vspace="5" hspace="5" src="Ren_data1_week7_06.png" alt=""> <img vspace="5" hspace="5" src="Ren_data1_week7_07.png" alt=""> <h2>verify Parseval's theorem<a name="12"></a></h2><pre class="language-matlab"><span class="keyword">for</span> unsegmented data <span class="string">case</span> <span class="string">--</span> <span class="string">same</span> <span class="string">normalization</span> <span class="string">used</span> <span class="string">for</span> <span class="string">segmented</span> <span class="string">case</span>
+</pre><pre class="codeinput">disp(<span class="string">'air - full data'</span>); std(air_dm)^2
+disp(<span class="string">'air - full - FFT'</span>); std(amp_A_air)^2
+
+disp(<span class="string">'SST - full data'</span>); std(sea_dm)^2
+disp(<span class="string">'SST - full - FFT'</span>); std(amp_A_sea)^2
+
+<span class="comment">%   segments</span>
+disp(<span class="string">'segmented data:'</span>)
+v1 = std(airtemp).^2; disp(<span class="string">'Air'</span>); mean(v1)
+v2 = std(seatemp).^2; disp(<span class="string">'SST'</span>); mean(v2)
+
+v1 = std(amp_airtemp_f).^2; disp(<span class="string">'Air FFT'</span>); mean(v1)
+v2 = std(amp_seatemp_f).^2; disp(<span class="string">'SST FFT'</span>); mean(v2)
+<span class="comment">%   not sure why they don't match, segmenting and windowing? calculate</span>
+<span class="comment">%   differently?  %Sarah Gille says that they won't match unless compare</span>
+<span class="comment">%   segmented and Hanning windowed data to the Fourier transform of each</span>
+<span class="comment">%   windowed segment</span>
+</pre><pre class="codeoutput">air - full data
+
+ans =
+
+    2.7273
+
+air - full - FFT
+
+ans =
+
+    2.6911
+
+SST - full data
+
+ans =
+
+    2.1899
+
+SST - full - FFT
+
+ans =
+
+    1.9848
+
+segmented data:
+Air
+
+ans =
+
+    0.2757
+
+SST
+
+ans =
+
+    0.0726
+
+Air FFT
+
+ans =
+
+   2.9576e-04
+
+SST FFT
+
+ans =
+
+   9.4053e-05
+
+</pre><h2>variance preserving spectra<a name="13"></a></h2><pre>multiply by frequency (spectra and the errorbar)</pre><pre class="codeinput">figure(<span class="string">'Name'</span>, <span class="string">'Variance Preserving'</span>)
+    semilogx(frequency_filt, frequency_filt' .* amp_airtemp_f_m, <span class="string">'LineWidth'</span>, 1.1)
+    hold <span class="string">on</span>
+    semilogx([frequency_filt(:)], <span class="keyword">...</span>
+        ([err_high].*amp_airtemp_f_m(:).*frequency_filt(:)), <span class="keyword">...</span>
+        <span class="string">'k'</span>, <span class="string">'LineWidth'</span>, 0.3)
+    semilogx(frequency_filt(:),<span class="keyword">...</span>
+        (err_low.*amp_airtemp_f_m(:).*frequency_filt(:)), <span class="keyword">...</span>
+        <span class="string">'k'</span>, <span class="string">'LineWidth'</span>, 0.3)
+    grid <span class="string">on</span>
+    ylabel(<span class="string">'[^{\circ}C]^{2}'</span>)
+    xlabel(<span class="string">'cycles per day'</span>)
+    title(<span class="string">'Variance Preserving - Air Temperature (Segmented)'</span>)
+
+figure(<span class="string">'Name'</span>, <span class="string">'Variance Preserving'</span>)
+    semilogx(frequency_filt, frequency_filt' .* amp_seatemp_f_m, <span class="string">'LineWidth'</span>, 1.1)
+    hold <span class="string">on</span>
+    semilogx([frequency_filt(:)], <span class="keyword">...</span>
+        ([err_high].*amp_seatemp_f_m(:).*frequency_filt(:)), <span class="keyword">...</span>
+        <span class="string">'k'</span>, <span class="string">'LineWidth'</span>, 0.3)
+    semilogx(frequency_filt(:),<span class="keyword">...</span>
+        (err_low.*amp_seatemp_f_m(:).*frequency_filt(:)), <span class="keyword">...</span>
+        <span class="string">'k'</span>, <span class="string">'LineWidth'</span>, 0.3)
+    grid <span class="string">on</span>
+    ylabel(<span class="string">'[^{\circ}C]^{2}'</span>)
+    xlabel(<span class="string">'cycles per day'</span>)
+    title(<span class="string">'Variance Preserving - Sea Temperature (Segmented)'</span>)
+</pre><img vspace="5" hspace="5" src="Ren_data1_week7_08.png" alt=""> <img vspace="5" hspace="5" src="Ren_data1_week7_09.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2015a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%%% Ren_data1_week7.m
+%
+%   midterm
+%
+%   data from Stratus mooring program
+%
+%   A. Ren, November 21, 2017
+
+%% load file
+filename = './OS_Stratus_2015_D_M.nc';
+%ncdisp(filename)
+
+seawaterdata = ncread(filename, 'TEMP');
+airtempdata = ncread(filename, 'AIRT');
+timedata = ncread(filename, 'TIME');
+heightair = ncread(filename, 'HEIGHT_RHAT');
+heightsea = ncread(filename, 'DEPTH');
+
+%% edit/add time variables
+baseday = datenum(1950, 1, 1);
+multby = baseday * ones(size(timedata, 1), size(timedata, 2));
+timemtlb = multby + timedata;
+timemtlb_dt = datetime(timemtlb, 'ConvertFrom', 'datenum');
+
+%% Plot time series of air temp and sst from file
+figure('Name', 'TimeSeries Plots')
+subplot(2, 1, 1)
+    scatter(timemtlb, airtempdata, 1, 'filled')
+    title('Air Temperature')
+    grid on
+    datetick('x', 3)
+    xlabel('Time')
+    ylabel('Temperature (^{\circ}C)')
+    ylim([15 26])
+    xlim([datenum(2015, 3, 1) datenum(2016, 8, 1)])
+subplot(2, 1, 2)
+    scatter(timemtlb, seawaterdata, 1, 'filled')
+    title('Sea Temperature')
+    datetick('x', 3)
+    grid on
+    datetick('x', 3)
+    xlabel('Time')
+    ylabel('Temperature (^{\circ}C)')
+    ylim([15 26])
+    xlim([datenum(2015, 3, 1) datenum(2016, 8, 1)])
+%% check spikes
+figure('Name', 'Sea')
+    scatter(timemtlb, seawaterdata, 1, 'filled')
+    title('Sea Temperature')
+    datetick('x', 3)
+    grid on
+    datetick('x', 3)
+    xlabel('Time')
+    ylabel('Temperature (^{\circ}C)')
+    xlim([datenum(2015, 3, 1) datenum(2016, 8, 1)])
+%% error checking
+sum(isnan(airtempdata))  %% zero
+sum(isnan(seawaterdata)) %% zero
+chd = diff(timemtlb);
+estd = floor(chd*10000);  %% matlab diff created slight differences in vals
+
+figure('Name', 'Gap between time increments - scaled')
+    scatter(timemtlb(2:end), estd)
+    grid on
+
+%   we're going to take data "as is" for now
+
+%% Fourier Transform - first try without segmenting
+
+% demean
+air_dm = airtempdata - mean(airtempdata);
+sea_dm = seawaterdata - mean(seawaterdata);
+
+% no trend (?); assume no trend
+
+% try basic spectra, no segmenting first
+A_air = fft(air_dm);
+N = length(A_air);
+amp_A_air = abs(A_air( 1:(N+1)/2 ) ).^2;  %odd N
+amp_A_air(2:end) = 2*amp_A_air(2:end);
+alpha = 6.9444e-04; %days %period/N = deltaT in units you want
+amp_A_air = amp_A_air* alpha/N ;
+
+%  x-axis
+scale = 1/60 *3600*24; % 1 measurement / 60 seconds * ()= cycles per day
+frequencyaxis = scale*(0:(N/2))/N; % odd number of samples, N
+%  the notes are wrong
+%  notes say (0:N/2-1)
+%  should say(0: [(N+1)/2]-1 ) which is equivalent to 0:N/2 for an odd
+%  number of samples since matlab increments by one and won't pick up the
+%  last "half" digit.
+
+figure('Name', 'Full Air Temperature')
+    loglog(frequencyaxis, amp_A_air)
+    grid on
+    title('air temperature')
+    ylabel('[^{\circ}C]^{2} / cpd')
+    xlabel('cycles per day')
+
+A_sea = fft(sea_dm);
+N = length(A_sea);
+amp_A_sea = abs(A_sea( 1:(N+1)/2 ) ).^2;
+amp_A_sea(2:end) = 2*amp_A_sea(2:end);
+amp_A_sea = amp_A_sea* alpha/N;
+
+figure('Name', 'Full SST')
+    loglog(frequencyaxis, amp_A_sea)
+    grid on
+    title('sea surface temperature')
+    ylabel('[^{\circ}C]^{2} / cpd')
+    xlabel('cycles per day')
+
+%% Fourier Transform - with segments
+airtemp = airtempdata(1:end-1);
+    nosegs = 9;
+    dataperseg = length(airtemp)/nosegs;
+airtemp = reshape(airtemp, [dataperseg, nosegs]);
+
+seatemp = seawaterdata(1:end-1);
+seatemp = reshape(seatemp, [dataperseg, nosegs]);
+
+% 50 % overlapping segments
+startinc = dataperseg/2;
+indexlist = startinc+1:dataperseg:length(airtempdata)-dataperseg;
+
+for i = 1:length(indexlist)
+    overlapseg(:, i) = airtemp(indexlist(i):indexlist(i)+dataperseg-1)';
+end
+airtemp = [airtemp overlapseg];
+
+for i = 1:length(indexlist)
+    overlapseg(:, i) = seatemp(indexlist(i):indexlist(i)+dataperseg-1)';
+end
+seatemp = [seatemp overlapseg];
+
+% detrend (demean)
+seatemp = detrend(seatemp);
+airtemp = detrend(airtemp);
+
+% Hanning window
+airtemp_f = airtemp.* (hann(dataperseg)*ones(1, size(airtemp, 2)));
+seatemp_f = seatemp.* (hann(dataperseg)*ones(1, size(seatemp, 2)));
+
+% fft
+A_airtemp_f = fft(airtemp_f);
+A_seatemp_f = fft(seatemp_f);
+
+% add back energy lost by applying Hanning Window (sqrt(8/3))
+constantHanning = sqrt(8/3);
+A_airtemp_f = A_airtemp_f * constantHanning;
+A_seatemp_f = A_seatemp_f * constantHanning;
+
+%% calculate spectra
+NN = dataperseg;
+
+amp_airtemp_f = abs(A_airtemp_f(1:(NN/2) + 1, :)).^2 ;  % even N
+amp_airtemp_f(2:end-1, :) = 2*amp_airtemp_f(2:end-1, :); % mult by 2
+alpha = 6.9444e-04; %days %period/N = deltaT in units you want
+amp_airtemp_f = amp_airtemp_f * alpha/NN;              % normalize
+
+amp_seatemp_f = abs(A_seatemp_f(1:(NN/2) +1, :)).^2 ;   % even N
+amp_seatemp_f(2:end-1, :) = 2*amp_seatemp_f(2:end-1, :); % mult by 2
+amp_seatemp_f = amp_seatemp_f * alpha/NN;              % normalize
+
+% average over segments
+amp_airtemp_f_m = mean(amp_airtemp_f, 2);
+amp_seatemp_f_m = mean(amp_seatemp_f, 2);
+
+% xaxis
+% scale from above; 1 measurement / 60 seconds * ()= cycles per day
+frequency_filt = scale* (0:NN/2)/NN;
+
+%% error bar
+%  assume degrees of freedom is the number of segments and overlapping
+%  segments used; 9 + 8 = 17.  This is also size(airtemp, 2).
+
+totalindepseg = 17;
+dof = 2*totalindepseg;
+
+err_high = dof/chi2inv(0.05/2, dof);
+err_low = dof/chi2inv(1-0.05/2, dof);
+
+%% plots with errorbar
+
+figure('Name', 'Sea Temperature - segmented w/errorbar')
+    loglog(frequency_filt, amp_seatemp_f_m)
+    hold on
+    loglog([frequency_filt(end) frequency_filt(end)], ...
+            ([err_low err_high]*amp_seatemp_f_m(end) * 1000), 'k', 'LineWidth', 1.8)
+    grid on
+    ylim([1e-8 1e2])
+    ylabel('[^{\circ}C]^{2} / cpd')
+    xlabel('cycles per day')
+    title('sea temperature - segmented, hanning window')
+
+figure('Name', 'Air Temperature - segmented w/ errorbar')
+    loglog(frequency_filt, amp_airtemp_f_m)
+    hold on
+    loglog([frequency_filt(end) frequency_filt(end)], ...
+            ([err_low err_high]*amp_airtemp_f_m(end) * 1000), 'k', 'LineWidth', 1.8)
+    grid on
+    ylabel('[^{\circ}C]^{2} / cpd')
+    xlabel('cycles per day')
+    title('air temperature - segmented, hanning window')
+
+%% verify Parseval's theorem
+%   for unsegmented data case REPLACE_WITH_DASH_DASH same normalization used for segmented case
+disp('air - full data'); std(air_dm)^2
+disp('air - full - FFT'); std(amp_A_air)^2
+
+disp('SST - full data'); std(sea_dm)^2
+disp('SST - full - FFT'); std(amp_A_sea)^2
+
+%   segments
+disp('segmented data:')
+v1 = std(airtemp).^2; disp('Air'); mean(v1)
+v2 = std(seatemp).^2; disp('SST'); mean(v2)
+
+v1 = std(amp_airtemp_f).^2; disp('Air FFT'); mean(v1)
+v2 = std(amp_seatemp_f).^2; disp('SST FFT'); mean(v2)
+%   not sure why they don't match, segmenting and windowing? calculate
+%   differently?  %Sarah Gille says that they won't match unless compare 
+%   segmented and Hanning windowed data to the Fourier transform of each 
+%   windowed segment
+
+%% variance preserving spectra
+%  multiply by frequency (spectra and the errorbar)
+
+figure('Name', 'Variance Preserving')
+    semilogx(frequency_filt, frequency_filt' .* amp_airtemp_f_m, 'LineWidth', 1.1)
+    hold on
+    semilogx([frequency_filt(:)], ...
+        ([err_high].*amp_airtemp_f_m(:).*frequency_filt(:)), ...
+        'k', 'LineWidth', 0.3)
+    semilogx(frequency_filt(:),...
+        (err_low.*amp_airtemp_f_m(:).*frequency_filt(:)), ...
+        'k', 'LineWidth', 0.3)
+    grid on
+    ylabel('[^{\circ}C]^{2}')
+    xlabel('cycles per day')
+    title('Variance Preserving - Air Temperature (Segmented)')
+
+figure('Name', 'Variance Preserving')
+    semilogx(frequency_filt, frequency_filt' .* amp_seatemp_f_m, 'LineWidth', 1.1)
+    hold on
+    semilogx([frequency_filt(:)], ...
+        ([err_high].*amp_seatemp_f_m(:).*frequency_filt(:)), ...
+        'k', 'LineWidth', 0.3)
+    semilogx(frequency_filt(:),...
+        (err_low.*amp_seatemp_f_m(:).*frequency_filt(:)), ...
+        'k', 'LineWidth', 0.3)
+    grid on
+    ylabel('[^{\circ}C]^{2}')
+    xlabel('cycles per day')
+    title('Variance Preserving - Sea Temperature (Segmented)')
+
+##### SOURCE END #####
+--></body></html>

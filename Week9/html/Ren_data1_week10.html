@@ -1,0 +1,656 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Ren_data1_week10</title><meta name="generator" content="MATLAB 8.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2017-12-13"><meta name="DC.source" content="Ren_data1_week10.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1></h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Ren_data1_week9.m</a></li><li><a href="#2">attempt to use glider data and calculate for wavenumber</a></li><li><a href="#3">glider data</a></li><li><a href="#4">load data</a></li><li><a href="#5">diagnostics</a></li><li><a href="#6">Glider Climatology Data</a></li><li><a href="#7">load data</a></li><li><a href="#8">checking data</a></li><li><a href="#9">basics</a></li><li><a href="#10">what do data look like?</a></li><li><a href="#11">there are NaNs</a></li><li><a href="#12">detrend</a></li><li><a href="#13">not going to window ??</a></li><li><a href="#14">Take FFT</a></li><li><a href="#15">Calculate spectra</a></li><li><a href="#16">Figures Spectra</a></li><li><a href="#17">Coherence</a></li><li><a href="#18">Testing if coherence is reasonable</a></li></ul></div><h2>Ren_data1_week9.m<a name="1"></a></h2><pre class="language-matlab">Look <span class="string">at</span> <span class="string">coherence</span> <span class="string">between</span> <span class="string">two</span> <span class="string">records</span> <span class="string">of</span> <span class="string">your</span> <span class="string">choice</span>
+</pre><pre class="language-matlab">A. Ren, December <span class="string">5</span>, 2017
+</pre><h2>attempt to use glider data and calculate for wavenumber<a name="2"></a></h2><h2>glider data<a name="3"></a></h2><pre class="language-matlab">two <span class="string">choices</span>, Line <span class="string">80</span> <span class="string">and</span> <span class="string">Line</span> <span class="string">66</span> <span class="string">==</span> <span class="string">choose</span> <span class="string">like</span> <span class="string">66</span> <span class="string">for</span> <span class="string">now</span>
+</pre><pre class="codeinput"><span class="comment">%ncdisp('CUGN_line_66.nc')</span>
+</pre><h2>load data<a name="4"></a></h2><pre class="codeinput"><span class="comment">% filename = 'CUGN_line_66.nc';</span>
+<span class="comment">%</span>
+<span class="comment">% L66_time = ncread(filename, 'time_uv');</span>
+<span class="comment">% L66_v = ncread(filename, 'v_depth_mean');</span>
+<span class="comment">% L66_u = ncread(filename, 'u_depth_mean');</span>
+<span class="comment">% L66_lat = ncread(filename, 'lat_uv');</span>
+<span class="comment">% L66_lon = ncread(filename, 'lon_uv');</span>
+<span class="comment">%</span>
+<span class="comment">% %  adjust time to matlab datetime</span>
+<span class="comment">% L66_time_mt = datetime(L66_time, 'ConvertFrom', 'posixtime', ...</span>
+<span class="comment">%     'Timezone', 'America/Los_Angeles');</span>
+<span class="comment">% %  now remove the timezone which helps with conversions and calculations</span>
+<span class="comment">% L66_time_mt.TimeZone = '';</span>
+</pre><h2>diagnostics<a name="5"></a></h2><p>time_start = L66_time_mt(1); time_end = L66_time_mt(end);</p><p>L66_lat(1:10) L66_lon(1:10) diff(L66_lat(1:10)) diff(L66_lon(1:10)) gdist(L66_lat(1), L66_lon(1), L66_lat(2), L66_lon(2)) gdist(L66_lat(2), L66_lon(2), L66_lat(3), L66_lon(3)) gdist(L66_lat(4), L66_lon(4), L66_lat(5), L66_lon(5)) L66_lon1 = ncread(filename, 'lon'); diff(L66_lon1) gdist(L66_lat1(1), L66_lon1(1), L66_lat1(2), L66_lon1(2)) gdist(L66_lat1(2), L66_lon1(2), L66_lat1(3), L66_lon1(3)) L66_time_all = ncread(filename, 'time'); diff(L66_time_all) L66_time_all(1:10) L66_time_all = datetime(L66_time_all, 'ConvertFrom', 'posixtime', ... 'Timezone', 'America/Los_Angeles'); L66_time_all(1:10) diff(L66_time_all(1:10))</p><pre class="codeinput"><span class="comment">%   Because the glider data are not collected uniformly in space or time,</span>
+<span class="comment">%   we have to table this for the assignment.  Use climatology/objectively</span>
+<span class="comment">%   mapped products instead.</span>
+</pre><h2>Glider Climatology Data<a name="6"></a></h2><pre class="language-matlab">Investigate <span class="string">geostrophic</span> <span class="string">velocity:</span>
+Take <span class="string">Line</span> <span class="string">67</span> <span class="string">"total"</span> <span class="string">data</span> <span class="string">and</span> <span class="string">investigate</span> <span class="string">coherence</span> <span class="string">between</span> <span class="string">80</span> <span class="string">meters</span>
+depth <span class="string">and</span> <span class="string">200</span> <span class="string">meters</span> <span class="string">depth.</span>  <span class="string">I</span> <span class="string">expect</span> <span class="string">to</span> <span class="string">see</span> <span class="string">some</span> <span class="string">coherence</span> <span class="string">on</span> <span class="string">large</span>
+scales <span class="string">in</span> <span class="string">terms</span> <span class="string">of</span> <span class="string">the</span> <span class="string">size</span> <span class="string">of</span> <span class="string">the</span> <span class="string">major</span> <span class="string">currents</span>, but <span class="string">I</span> <span class="string">expect</span> <span class="string">the</span>
+spectra <span class="string">should</span> <span class="string">show</span> <span class="string">different</span> <span class="string">wavenumber</span> <span class="string">peaks.</span>
+</pre><h2>load data<a name="7"></a></h2><pre class="codeinput">filename = <span class="string">'total_z_66.nc'</span>;
+
+L66_dist = ncread(filename, <span class="string">'distance'</span>);
+L66_time = ncread(filename, <span class="string">'time'</span>);
+L66_time_mt = datetime(L66_time, <span class="string">'ConvertFrom'</span>, <span class="string">'posixtime'</span>, <span class="keyword">...</span>
+    <span class="string">'TimeZone'</span>, <span class="string">'America/Los_Angeles'</span>);
+L66_time_mt.TimeZone = <span class="string">''</span>;
+
+L66_dep = ncread(filename, <span class="string">'depth'</span>);
+L66_gvel = ncread(filename, <span class="string">'geostrophic_velocity'</span>);
+</pre><h2>checking data<a name="8"></a></h2><pre>we need the distance from shore variable to be evenly spaced, which is
+probably true since this is a data product</pre><pre class="codeinput">figure
+plot(L66_dist)
+<span class="comment">% yes, straight line means constant distance between</span>
+diff(L66_dist(1:10))
+
+<span class="comment">%  the distance between each data point is 5 km</span>
+samplingdist = 5; <span class="comment">%km</span>
+<span class="comment">%   the nyquist wavenumber is 1/(2*samplingdist) = 1/10; 1 cycle per 10 km</span>
+</pre><pre class="codeoutput">
+ans =
+
+     5
+     5
+     5
+     5
+     5
+     5
+     5
+     5
+     5
+
+</pre><img vspace="5" hspace="5" src="Ren_data1_week10_01.png" alt=""> <h2>basics<a name="9"></a></h2><pre class="codeinput">L66_vel80 = squeeze(L66_gvel(8, :, :));  <span class="comment">% matrix is time versus distance</span>
+L66_vel80 = L66_vel80';                  <span class="comment">% change to columns of segments</span>
+L66_vel200 = squeeze(L66_gvel(20, :, :));
+L66_vel200 = L66_vel200';
+</pre><h2>what do data look like?<a name="10"></a></h2><pre class="codeinput"><span class="comment">%   plotting some characteristic segments (first 8 transects in time)</span>
+figure(<span class="string">'Name'</span>, <span class="string">'Select Transects'</span>)
+subplot(2, 1, 1)
+    plot(L66_dist, L66_vel80(:, 1:8))
+    title(<span class="string">'Alongshore velocity at 80 m'</span>)
+    ylabel(<span class="string">'Geostrophic Velocity (m/s)'</span>)
+    xlabel(<span class="string">'Distance from Shore (km)'</span>)
+subplot(2, 1, 2)
+    plot(L66_dist, L66_vel200(:, 1:8))
+    title(<span class="string">'Alongshore velocity at 200 m'</span>)
+    ylabel(<span class="string">'Geostrophic Velocity (m/s)'</span>)
+    xlabel(<span class="string">'Distance from Shore (km)'</span>)
+
+<span class="comment">%   plotting all data</span>
+figure(<span class="string">'Name'</span>, <span class="string">'All Data'</span>)
+subplot(2, 1, 1)
+    plot(L66_vel80(:))
+    title(<span class="string">'Alongshore velocity at 80 m'</span>)
+    ylabel(<span class="string">'Geostrophic Velocity (m/s)'</span>)
+    xlabel(<span class="string">'Spatial Scale (km)'</span>)
+subplot(2, 1, 2)
+    plot(L66_vel200(:))
+    title(<span class="string">'Alongshore velocity at 200 m'</span>)
+    ylabel(<span class="string">'Geostrophic Velocity (m/s)'</span>)
+    xlabel(<span class="string">'Spatial Scale (km)'</span>)
+</pre><img vspace="5" hspace="5" src="Ren_data1_week10_02.png" alt=""> <img vspace="5" hspace="5" src="Ren_data1_week10_03.png" alt=""> <h2>there are NaNs<a name="11"></a></h2><pre class="language-matlab">get <span class="string">rid</span> <span class="string">of</span> <span class="string">first</span> <span class="string">5</span> <span class="string">data</span> <span class="string">points</span> <span class="string">closest</span> <span class="string">to</span> <span class="string">shore</span> <span class="string">(1-25 km)</span>
+</pre><pre class="codeinput">vel80 = L66_vel80(6:81, :);
+vel200 = L66_vel200(6:81, :);
+distfft = L66_dist(6:81);
+
+<span class="comment">%   get rid of any remaining segments with NaNs</span>
+<span class="comment">%   1) identify such segments</span>
+indexnan1 = any(isnan(vel80));
+indexnan2 = any(isnan(vel200));
+
+vel80_nonan = vel80(:, ~indexnan1);
+vel200_nonan = vel200(:, ~indexnan2);
+
+sum(sum(isnan(vel80_nonan)))
+sum(sum(isnan(vel200_nonan)))
+</pre><pre class="codeoutput">
+ans =
+
+     0
+
+
+ans =
+
+     0
+
+</pre><h2>detrend<a name="12"></a></h2><pre>looks like I should just demean - fairly stationary</pre><pre class="codeinput">vel80_dt = detrend(vel80_nonan, <span class="string">'constant'</span>);  <span class="comment">% remove mean</span>
+vel200_dt = detrend(vel200_nonan, <span class="string">'constant'</span>);
+</pre><h2>not going to window ??<a name="13"></a></h2><pre class="codeinput">filteron = <span class="string">'hanning'</span>;
+
+N = length(distfft);  <span class="comment">% how many data points per segment</span>
+
+<span class="keyword">switch</span> filteron
+    <span class="keyword">case</span> <span class="string">'hanning'</span>
+vel80_h = vel80_dt.* (hann(N)*ones(1, size(vel80_dt, 2)));
+vel200_h = vel200_dt.* (hann(N)*ones(1, size(vel80_dt, 2)));
+    <span class="keyword">case</span> <span class="string">'none'</span>
+<span class="keyword">end</span>
+</pre><h2>Take FFT<a name="14"></a></h2><pre class="codeinput"><span class="keyword">switch</span> filteron
+    <span class="keyword">case</span> <span class="string">'hanning'</span>
+        A_vel80 = fft(vel80_h);
+        A_vel200 = fft(vel200_h);
+    <span class="keyword">case</span> <span class="string">'none'</span>
+        A_vel80 = fft(vel80_dt);
+        A_vel200 = fft(vel200_dt);
+<span class="keyword">end</span>
+</pre><h2>Calculate spectra<a name="15"></a></h2><pre class="codeinput">amp_vel80 = abs(A_vel80(1:(N/2) + 1, :)).^2 ;  <span class="comment">% even N</span>
+amp_vel80(2:end-1, :) = 2*amp_vel80(2:end-1, :); <span class="comment">% mult by 2</span>
+alpha = 5; <span class="comment">%km %lengthofsample/N = deltaL in units you want</span>
+amp_vel80 = amp_vel80 * alpha/N;              <span class="comment">% normalize</span>
+
+amp_vel200 = abs(A_vel200(1:(N/2) + 1, :)).^2 ;  <span class="comment">% even N</span>
+amp_vel200(2:end-1, :) = 2*amp_vel200(2:end-1, :); <span class="comment">% mult by 2</span>
+alpha = 5; <span class="comment">%km %lengthofsample/N = deltaL in units you want</span>
+amp_vel200 = amp_vel200 * alpha/N;              <span class="comment">% normalize</span>
+
+<span class="comment">% average over segments</span>
+amp_vel80_m = mean(amp_vel80, 2);
+amp_vel200_m = mean(amp_vel200, 2);
+
+<span class="comment">% xaxis</span>
+scale = 1/5; <span class="comment">%km  1 measurement / 5 km * ()= cycles per km</span>
+wavenumberaxis = scale* (0:N/2)/N;
+
+<span class="comment">% error bar</span>
+totalindepseg = size(A_vel80, 2);
+
+<span class="keyword">switch</span> filteron
+    <span class="keyword">case</span> <span class="string">'hanning'</span>
+        dof = 36/19 * totalindepseg;
+    <span class="keyword">case</span> <span class="string">'none'</span>
+        dof = 2*totalindepseg;
+<span class="keyword">end</span>
+err_high = dof/chi2inv(0.05/2, dof);
+err_low = dof/chi2inv(1-0.05/2, dof);
+</pre><h2>Figures Spectra<a name="16"></a></h2><pre class="codeinput">figure(<span class="string">'Name'</span>, <span class="string">'Velocity at 80 m'</span>)
+    loglog(wavenumberaxis, amp_vel80_m, <span class="string">'LineWidth'</span>, 1.2)
+    hold <span class="string">on</span>
+    loglog([wavenumberaxis(2) wavenumberaxis(2)], <span class="keyword">...</span>
+        ([err_low err_high]*amp_vel80_m(2) *1), <span class="string">'k'</span>, <span class="string">'LineWidth'</span>, 1.8)
+    loglog(wavenumberaxis(2:10), (6e-5)*wavenumberaxis(2:10).^-(2),<span class="keyword">...</span>
+        <span class="string">'--'</span>, <span class="string">'LineWidth'</span>, 1)
+    loglog(wavenumberaxis(3:22), (2e-8)*wavenumberaxis(3:22).^-(11/3),<span class="keyword">...</span>
+        <span class="string">'--'</span>, <span class="string">'LineWidth'</span>, 1)
+    loglog(wavenumberaxis(11:30), (0.3e-9)*wavenumberaxis(11:30).^-5,<span class="keyword">...</span>
+        <span class="string">'--'</span>, <span class="string">'LineWidth'</span>, 1)
+    grid <span class="string">on</span>
+    title(<span class="string">'Alongshore Velocity at 80 m'</span>)
+    ylabel(<span class="string">'[m/s]^{2} / cycles per km'</span>)
+    xlabel(<span class="string">'Cycles per km'</span>)
+    legend(<span class="string">'Spectrum'</span>, <span class="string">'error bar'</span>, <span class="string">'K^{-2}'</span>, <span class="string">'K^{-(11/3)}'</span>, <span class="string">'K^{-5}'</span>)
+
+figure(<span class="string">'Name'</span>, <span class="string">'Velocity at 200 m'</span>)
+    loglog(wavenumberaxis, amp_vel200_m, <span class="string">'LineWidth'</span>, 1.2)
+    hold <span class="string">on</span>
+    loglog([wavenumberaxis(2) wavenumberaxis(2)], <span class="keyword">...</span>
+        ([err_low err_high]*amp_vel200_m(2) *1), <span class="string">'k'</span>, <span class="string">'LineWidth'</span>, 1.8)
+    loglog(wavenumberaxis(2:10), (1e-5)*wavenumberaxis(2:10).^-(2),<span class="keyword">...</span>
+        <span class="string">'--'</span>, <span class="string">'LineWidth'</span>, 1)
+    loglog(wavenumberaxis(3:22), (1e-8)*wavenumberaxis(3:22).^-(11/3),<span class="keyword">...</span>
+        <span class="string">'--'</span>, <span class="string">'LineWidth'</span>, 1)
+    loglog(wavenumberaxis(11:30), (1e-10)*wavenumberaxis(11:30).^-5,<span class="keyword">...</span>
+        <span class="string">'--'</span>, <span class="string">'LineWidth'</span>, 1)
+    grid <span class="string">on</span>
+    title(<span class="string">'Alongshore Velocity at 200 m'</span>)
+    ylabel(<span class="string">'[m/s]^{2} / cycles per km'</span>)
+    xlabel(<span class="string">'Cycles per km'</span>)
+    legend(<span class="string">'Spectrum'</span>, <span class="string">'error bar'</span>, <span class="string">'K^{-2}'</span>, <span class="string">'K^{-(11/3)}'</span>, <span class="string">'K^{-5}'</span>)
+</pre><img vspace="5" hspace="5" src="Ren_data1_week10_04.png" alt=""> <img vspace="5" hspace="5" src="Ren_data1_week10_05.png" alt=""> <h2>Coherence<a name="17"></a></h2><pre class="codeinput">C_xy = conj(A_vel80(1:(N/2) + 1,:)).* A_vel200(1:(N/2) + 1,:)*alpha/N;
+C_xy(2:end-1,:) = 2*C_xy(2:end-1,:);
+<span class="comment">%</span>
+coherence = abs(mean(C_xy,2))./sqrt(amp_vel80_m .* amp_vel200_m);
+
+alp = 0.05;
+segs = size(A_vel80, 2) - 1;
+threshold = sqrt( 1-alp^(1/segs) );
+figure
+    semilogx((0:N/2)/N*scale,coherence,<span class="keyword">...</span>
+        [wavenumberaxis(2) wavenumberaxis(end)],[threshold threshold])
+    grid <span class="string">on</span>
+    ylabel(<span class="string">'Coherence'</span>)
+    xlabel(<span class="string">'Cycles per km'</span>)
+
+<span class="comment">%   and Phase</span>
+seg = segs+1;
+phase=atan2(-imag(mean(C_xy,2)),real(mean(C_xy,2)));
+delta_phase = sqrt((1-coherence.^2)./(abs(coherence).^2*2*seg));
+figure
+    semilogx(wavenumberaxis, [phase phase+delta_phase phase-delta_phase])
+    axis([wavenumberaxis(1) wavenumberaxis(end) -pi pi])
+    grid <span class="string">on</span>
+    ylabel(<span class="string">'Phase (radians)'</span>)
+    xlabel(<span class="string">'Cycles per km'</span>)
+
+<span class="comment">%  subplot figure</span>
+figure
+subplot(2, 1, 1)
+    semilogx((0:N/2)/N*scale,coherence,<span class="keyword">...</span>
+        [wavenumberaxis(2) wavenumberaxis(end)],[threshold threshold])
+    grid <span class="string">on</span>
+    ylabel(<span class="string">'Coherence'</span>)
+    xlabel(<span class="string">'Cycles per km'</span>)
+subplot(2, 1, 2)
+    semilogx(wavenumberaxis, [phase phase+delta_phase phase-delta_phase])
+    axis([wavenumberaxis(1) wavenumberaxis(end) -pi pi])
+    grid <span class="string">on</span>
+    ylabel(<span class="string">'Phase (radians)'</span>)
+    xlabel(<span class="string">'Cycles per km'</span>)
+</pre><img vspace="5" hspace="5" src="Ren_data1_week10_06.png" alt=""> <img vspace="5" hspace="5" src="Ren_data1_week10_07.png" alt=""> <img vspace="5" hspace="5" src="Ren_data1_week10_08.png" alt=""> <h2>Testing if coherence is reasonable<a name="18"></a></h2><pre class="language-matlab">(from Sarah Gille)
+</pre><pre class="codeinput"><span class="comment">%   segments with random noise 1000 data points per segment, 300 segments</span>
+vel80=randn(1000,300);
+vel200=randn(1000,300);
+
+<span class="comment">%   fft</span>
+A_vel80 = fft(vel80);
+A_vel200 = fft(vel200);
+
+<span class="comment">%   calculate spectra</span>
+N = 300;
+
+amp_vel80 = abs(A_vel80(1:(N/2) + 1, :)).^2 * (1/N);   <span class="comment">% no normalization</span>
+amp_vel200 = abs(A_vel200(1:(N/2) + 1, :)).^2 * (1/N); <span class="comment">% no normalization</span>
+amp_vel80_m = mean(amp_vel80, 2);
+amp_vel200_m = mean(amp_vel200, 2);
+
+wavenumberaxis = (0:N/2)/N;
+
+<span class="comment">%   coherence</span>
+C_xy = conj(A_vel80(1:(N/2) + 1,:)).* A_vel200(1:(N/2) + 1,:)/N;
+coherence = abs(mean(C_xy,2))./sqrt(amp_vel80_m .* amp_vel200_m);
+
+<span class="comment">%   threshold</span>
+alp = 0.05;
+segs = N - 1;
+threshold = sqrt( 1-alp^(1/segs) );
+
+<span class="comment">%   figure</span>
+figure
+    semilogx((0:N/2)/N,coherence,<span class="keyword">...</span>
+        [wavenumberaxis(2) wavenumberaxis(end)],[threshold threshold])
+    grid <span class="string">on</span>
+    ylim([0 1])
+</pre><img vspace="5" hspace="5" src="Ren_data1_week10_09.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2015a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%%% Ren_data1_week9.m
+%
+%   Look at coherence between two records of your choice
+%
+%   A. Ren, December 5, 2017
+
+%% attempt to use glider data and calculate for wavenumber
+
+%% glider data
+%   two choices, Line 80 and Line 66 == choose like 66 for now
+
+%ncdisp('CUGN_line_66.nc')
+
+%% load data
+
+% filename = 'CUGN_line_66.nc';
+% 
+% L66_time = ncread(filename, 'time_uv');
+% L66_v = ncread(filename, 'v_depth_mean');
+% L66_u = ncread(filename, 'u_depth_mean');
+% L66_lat = ncread(filename, 'lat_uv');
+% L66_lon = ncread(filename, 'lon_uv');
+% 
+% %  adjust time to matlab datetime
+% L66_time_mt = datetime(L66_time, 'ConvertFrom', 'posixtime', ...
+%     'Timezone', 'America/Los_Angeles');
+% %  now remove the timezone which helps with conversions and calculations
+% L66_time_mt.TimeZone = '';
+
+%% diagnostics
+% time_start = L66_time_mt(1);
+% time_end = L66_time_mt(end);
+% 
+% L66_lat(1:10)
+% L66_lon(1:10)
+% diff(L66_lat(1:10))
+% diff(L66_lon(1:10))
+% gdist(L66_lat(1), L66_lon(1), L66_lat(2), L66_lon(2))
+% gdist(L66_lat(2), L66_lon(2), L66_lat(3), L66_lon(3))
+% gdist(L66_lat(4), L66_lon(4), L66_lat(5), L66_lon(5))
+% L66_lon1 = ncread(filename, 'lon');
+% diff(L66_lon1)
+% gdist(L66_lat1(1), L66_lon1(1), L66_lat1(2), L66_lon1(2))
+% gdist(L66_lat1(2), L66_lon1(2), L66_lat1(3), L66_lon1(3))
+% L66_time_all = ncread(filename, 'time');
+% diff(L66_time_all)
+% L66_time_all(1:10)
+% L66_time_all = datetime(L66_time_all, 'ConvertFrom', 'posixtime', ...
+% 'Timezone', 'America/Los_Angeles');
+% L66_time_all(1:10)
+% diff(L66_time_all(1:10))
+
+%   Because the glider data are not collected uniformly in space or time,
+%   we have to table this for the assignment.  Use climatology/objectively
+%   mapped products instead.
+
+%%  Glider Climatology Data
+%
+%   Investigate geostrophic velocity:
+%   Take Line 67 "total" data and investigate coherence between 80 meters
+%   depth and 200 meters depth.  I expect to see some coherence on large
+%   scales in terms of the size of the major currents, but I expect the
+%   spectra should show different wavenumber peaks.
+
+%% load data
+filename = 'total_z_66.nc';
+
+L66_dist = ncread(filename, 'distance');
+L66_time = ncread(filename, 'time');
+L66_time_mt = datetime(L66_time, 'ConvertFrom', 'posixtime', ...
+    'TimeZone', 'America/Los_Angeles');
+L66_time_mt.TimeZone = '';
+
+L66_dep = ncread(filename, 'depth');
+L66_gvel = ncread(filename, 'geostrophic_velocity');
+
+%% checking data
+%  we need the distance from shore variable to be evenly spaced, which is
+%  probably true since this is a data product
+
+figure
+plot(L66_dist)
+% yes, straight line means constant distance between
+diff(L66_dist(1:10))
+
+%  the distance between each data point is 5 km
+samplingdist = 5; %km
+%   the nyquist wavenumber is 1/(2*samplingdist) = 1/10; 1 cycle per 10 km
+
+%% basics
+
+L66_vel80 = squeeze(L66_gvel(8, :, :));  % matrix is time versus distance
+L66_vel80 = L66_vel80';                  % change to columns of segments
+L66_vel200 = squeeze(L66_gvel(20, :, :));
+L66_vel200 = L66_vel200';
+
+%% what do data look like?
+
+%   plotting some characteristic segments (first 8 transects in time)
+figure('Name', 'Select Transects')
+subplot(2, 1, 1)
+    plot(L66_dist, L66_vel80(:, 1:8))
+    title('Alongshore velocity at 80 m')
+    ylabel('Geostrophic Velocity (m/s)')
+    xlabel('Distance from Shore (km)')
+subplot(2, 1, 2)
+    plot(L66_dist, L66_vel200(:, 1:8))
+    title('Alongshore velocity at 200 m')
+    ylabel('Geostrophic Velocity (m/s)')
+    xlabel('Distance from Shore (km)')
+    
+%   plotting all data
+figure('Name', 'All Data')
+subplot(2, 1, 1)
+    plot(L66_vel80(:))
+    title('Alongshore velocity at 80 m')
+    ylabel('Geostrophic Velocity (m/s)')
+    xlabel('Spatial Scale (km)')
+subplot(2, 1, 2)
+    plot(L66_vel200(:))
+    title('Alongshore velocity at 200 m')
+    ylabel('Geostrophic Velocity (m/s)')
+    xlabel('Spatial Scale (km)')
+    
+
+%% there are NaNs
+%   get rid of first 5 data points closest to shore (1-25 km)
+vel80 = L66_vel80(6:81, :);
+vel200 = L66_vel200(6:81, :);
+distfft = L66_dist(6:81);
+
+%   get rid of any remaining segments with NaNs
+%   1) identify such segments
+indexnan1 = any(isnan(vel80));
+indexnan2 = any(isnan(vel200));
+
+vel80_nonan = vel80(:, ~indexnan1);
+vel200_nonan = vel200(:, ~indexnan2);
+
+sum(sum(isnan(vel80_nonan)))
+sum(sum(isnan(vel200_nonan)))
+
+%% detrend
+%  looks like I should just demean - fairly stationary
+vel80_dt = detrend(vel80_nonan, 'constant');  % remove mean
+vel200_dt = detrend(vel200_nonan, 'constant');
+
+%% not going to window ??
+filteron = 'hanning';
+
+N = length(distfft);  % how many data points per segment
+
+switch filteron
+    case 'hanning'
+vel80_h = vel80_dt.* (hann(N)*ones(1, size(vel80_dt, 2)));
+vel200_h = vel200_dt.* (hann(N)*ones(1, size(vel80_dt, 2)));
+    case 'none'
+end
+
+%%  Take FFT
+switch filteron
+    case 'hanning'
+        A_vel80 = fft(vel80_h);
+        A_vel200 = fft(vel200_h);
+    case 'none'
+        A_vel80 = fft(vel80_dt);
+        A_vel200 = fft(vel200_dt);
+end
+
+%% Calculate spectra
+amp_vel80 = abs(A_vel80(1:(N/2) + 1, :)).^2 ;  % even N
+amp_vel80(2:end-1, :) = 2*amp_vel80(2:end-1, :); % mult by 2
+alpha = 5; %km %lengthofsample/N = deltaL in units you want
+amp_vel80 = amp_vel80 * alpha/N;              % normalize
+
+amp_vel200 = abs(A_vel200(1:(N/2) + 1, :)).^2 ;  % even N
+amp_vel200(2:end-1, :) = 2*amp_vel200(2:end-1, :); % mult by 2
+alpha = 5; %km %lengthofsample/N = deltaL in units you want
+amp_vel200 = amp_vel200 * alpha/N;              % normalize
+
+% average over segments
+amp_vel80_m = mean(amp_vel80, 2);
+amp_vel200_m = mean(amp_vel200, 2);
+
+% xaxis
+scale = 1/5; %km  1 measurement / 5 km * ()= cycles per km
+wavenumberaxis = scale* (0:N/2)/N;
+
+% error bar
+totalindepseg = size(A_vel80, 2);
+
+switch filteron
+    case 'hanning'
+        dof = 36/19 * totalindepseg;
+    case 'none'
+        dof = 2*totalindepseg;
+end
+err_high = dof/chi2inv(0.05/2, dof);
+err_low = dof/chi2inv(1-0.05/2, dof);
+
+%% Figures Spectra
+
+figure('Name', 'Velocity at 80 m')
+    loglog(wavenumberaxis, amp_vel80_m, 'LineWidth', 1.2)
+    hold on
+    loglog([wavenumberaxis(2) wavenumberaxis(2)], ...
+        ([err_low err_high]*amp_vel80_m(2) *1), 'k', 'LineWidth', 1.8)
+    loglog(wavenumberaxis(2:10), (6e-5)*wavenumberaxis(2:10).^-(2),...
+        'REPLACE_WITH_DASH_DASH', 'LineWidth', 1)    
+    loglog(wavenumberaxis(3:22), (2e-8)*wavenumberaxis(3:22).^-(11/3),...
+        'REPLACE_WITH_DASH_DASH', 'LineWidth', 1)
+    loglog(wavenumberaxis(11:30), (0.3e-9)*wavenumberaxis(11:30).^-5,...
+        'REPLACE_WITH_DASH_DASH', 'LineWidth', 1)
+    grid on
+    title('Alongshore Velocity at 80 m')
+    ylabel('[m/s]^{2} / cycles per km')
+    xlabel('Cycles per km')
+    legend('Spectrum', 'error bar', 'K^{-2}', 'K^{-(11/3)}', 'K^{-5}') 
+    
+figure('Name', 'Velocity at 200 m')
+    loglog(wavenumberaxis, amp_vel200_m, 'LineWidth', 1.2)
+    hold on
+    loglog([wavenumberaxis(2) wavenumberaxis(2)], ...
+        ([err_low err_high]*amp_vel200_m(2) *1), 'k', 'LineWidth', 1.8)
+    loglog(wavenumberaxis(2:10), (1e-5)*wavenumberaxis(2:10).^-(2),...
+        'REPLACE_WITH_DASH_DASH', 'LineWidth', 1)    
+    loglog(wavenumberaxis(3:22), (1e-8)*wavenumberaxis(3:22).^-(11/3),...
+        'REPLACE_WITH_DASH_DASH', 'LineWidth', 1)
+    loglog(wavenumberaxis(11:30), (1e-10)*wavenumberaxis(11:30).^-5,...
+        'REPLACE_WITH_DASH_DASH', 'LineWidth', 1)
+    grid on
+    title('Alongshore Velocity at 200 m')
+    ylabel('[m/s]^{2} / cycles per km')
+    xlabel('Cycles per km')
+    legend('Spectrum', 'error bar', 'K^{-2}', 'K^{-(11/3)}', 'K^{-5}') 
+
+%% Coherence
+
+C_xy = conj(A_vel80(1:(N/2) + 1,:)).* A_vel200(1:(N/2) + 1,:)*alpha/N;
+C_xy(2:end-1,:) = 2*C_xy(2:end-1,:);
+% 
+coherence = abs(mean(C_xy,2))./sqrt(amp_vel80_m .* amp_vel200_m);
+
+alp = 0.05;
+segs = size(A_vel80, 2) - 1;
+threshold = sqrt( 1-alp^(1/segs) );
+figure
+    semilogx((0:N/2)/N*scale,coherence,...
+        [wavenumberaxis(2) wavenumberaxis(end)],[threshold threshold])
+    grid on
+    ylabel('Coherence')
+    xlabel('Cycles per km')
+
+%   and Phase
+seg = segs+1;
+phase=atan2(-imag(mean(C_xy,2)),real(mean(C_xy,2)));
+delta_phase = sqrt((1-coherence.^2)./(abs(coherence).^2*2*seg));
+figure
+    semilogx(wavenumberaxis, [phase phase+delta_phase phase-delta_phase])
+    axis([wavenumberaxis(1) wavenumberaxis(end) -pi pi])
+    grid on
+    ylabel('Phase (radians)')
+    xlabel('Cycles per km')
+    
+%  subplot figure
+figure
+subplot(2, 1, 1)
+    semilogx((0:N/2)/N*scale,coherence,...
+        [wavenumberaxis(2) wavenumberaxis(end)],[threshold threshold])
+    grid on
+    ylabel('Coherence')
+    xlabel('Cycles per km')
+subplot(2, 1, 2)
+    semilogx(wavenumberaxis, [phase phase+delta_phase phase-delta_phase])
+    axis([wavenumberaxis(1) wavenumberaxis(end) -pi pi])
+    grid on
+    ylabel('Phase (radians)')
+    xlabel('Cycles per km')
+    
+%%  Testing if coherence is reasonable
+%   (from Sarah Gille)
+
+%   segments with random noise 1000 data points per segment, 300 segments
+vel80=randn(1000,300);
+vel200=randn(1000,300);
+
+%   fft
+A_vel80 = fft(vel80);
+A_vel200 = fft(vel200);
+
+%   calculate spectra
+N = 300;
+
+amp_vel80 = abs(A_vel80(1:(N/2) + 1, :)).^2 * (1/N);   % no normalization
+amp_vel200 = abs(A_vel200(1:(N/2) + 1, :)).^2 * (1/N); % no normalization
+amp_vel80_m = mean(amp_vel80, 2);
+amp_vel200_m = mean(amp_vel200, 2);
+
+wavenumberaxis = (0:N/2)/N;
+
+%   coherence
+C_xy = conj(A_vel80(1:(N/2) + 1,:)).* A_vel200(1:(N/2) + 1,:)/N;
+coherence = abs(mean(C_xy,2))./sqrt(amp_vel80_m .* amp_vel200_m);
+
+%   threshold
+alp = 0.05;
+segs = N - 1;
+threshold = sqrt( 1-alp^(1/segs) );
+
+%   figure
+figure
+    semilogx((0:N/2)/N,coherence,...
+        [wavenumberaxis(2) wavenumberaxis(end)],[threshold threshold])
+    grid on
+    ylim([0 1])
+
+
+##### SOURCE END #####
+--></body></html>
